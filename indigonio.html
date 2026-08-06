@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="INDIGONIO: ideas que conectan, transforman y dejan huella.">
+  <title>INDIGONIO — Ideas que dejan huella</title>
+  <style>
+    :root {
+      --ink: #4a1230;
+      --muted: #8b5e73;
+      --indigo: #e11d72;
+      --violet: #f472b6;
+      --paper: #fff7fb;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 16px/1.6 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    header { position: sticky; top: 0; z-index: 10; background: rgba(255, 247, 251, .86); border-bottom: 1px solid #f7cfe1; backdrop-filter: blur(14px); }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .08em; }
+    .mark { display: grid; width: 38px; height: 38px; place-items: center; color: var(--white); border-radius: 12px; background: linear-gradient(135deg, var(--indigo), var(--violet)); box-shadow: 0 8px 20px #4f46e544; }
+    nav ul { display: flex; gap: 28px; padding: 0; margin: 0; color: var(--muted); list-style: none; }
+    nav a:hover { color: var(--indigo); }
+    .hero { padding: 112px 0 130px; background: radial-gradient(circle at 82% 20%, #fbcfe8 0, transparent 28%), var(--paper); }
+    .eyebrow { color: var(--indigo); font-size: .8rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 720px; margin-bottom: 24px; font-size: clamp(3.2rem, 9vw, 6.8rem); line-height: .95; letter-spacing: -.07em; }
+    h1 span { color: var(--indigo); }
+    .lead { max-width: 600px; color: var(--muted); font-size: 1.2rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+    .button { display: inline-block; padding: 13px 20px; border: 1px solid #f4bfd7; border-radius: 10px; font-weight: 700; background: var(--white); }
+    .button.primary { color: var(--white); border-color: var(--indigo); background: var(--indigo); }
+    .button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px #17203318; }
+    section { padding: 92px 0; }
+    .section-head { max-width: 620px; margin-bottom: 38px; }
+    h2 { margin-bottom: 12px; font-size: clamp(2rem, 5vw, 3.3rem); line-height: 1.05; letter-spacing: -.04em; }
+    .section-head p, .card p { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { padding: 28px; border: 1px solid #f7cfe1; border-radius: 18px; background: var(--white); }
+    .number { color: var(--indigo); font-size: 1.8rem; font-weight: 800; }
+    .card h3 { margin: 18px 0 8px; font-size: 1.25rem; }
+    .contact { color: var(--white); background: #831843; }
+    .contact .section-head p { color: #b7bfd0; }
+    footer { padding: 28px 0; color: #8b5e73; background: #fff0f6; font-size: .9rem; }
+    @media (max-width: 700px) {
+      nav ul { display: none; }
+      .hero { padding: 80px 0 92px; }
+      section { padding: 70px 0; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Navegación principal">
+      <a class="brand" href="#inicio"><span class="mark">I</span> INDIGONIO</a>
+      <ul>
+        <li><a href="#propuesta">Propuesta</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap">
+        <p class="eyebrow">Diseño · estrategia · tecnología</p>
+        <h1>Ideas con <span>carácter.</span> Resultados con sentido.</h1>
+        <p class="lead">INDIGONIO convierte desafíos complejos en experiencias simples, memorables y listas para crecer.</p>
+        <div class="actions">
+          <a class="button primary" href="#contacto">Hablemos</a>
+          <a class="button" href="#propuesta">Conocé más</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="propuesta">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Lo que hacemos</p>
+          <h2>Una mirada clara para avanzar.</h2>
+          <p>Combinamos pensamiento estratégico y ejecución cuidadosa para crear soluciones que funcionan en el mundo real.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><div class="number">01</div><h3>Identidad</h3><p>Construimos marcas con una voz propia, coherente y fácil de reconocer.</p></article>
+          <article class="card"><div class="number">02</div><h3>Experiencias</h3><p>Diseñamos productos digitales intuitivos que las personas disfrutan usar.</p></article>
+          <article class="card"><div class="number">03</div><h3>Impacto</h3><p>Medimos lo importante y convertimos cada aprendizaje en una nueva oportunidad.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso" class="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">El próximo paso</p>
+          <h2>Hagamos que una buena idea pase.</h2>
+          <p>Contanos qué estás imaginando y armemos juntos el camino para convertirlo en algo real.</p>
+        </div>
+        <a class="button primary" href="mailto:hola@indigonio.com">hola@indigonio.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacto"><div class="wrap">© 2026 INDIGONIO. Ideas que dejan huella.</div></footer>
+</body>
+</html>
