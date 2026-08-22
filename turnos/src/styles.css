@@ -52,7 +52,8 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
 .button:disabled { opacity: .55; cursor: wait; transform: none; }
 .submit { width: 100%; margin-top: 12px; }
 .payment-copy, .muted { font-size: .8rem; color: #68736d; line-height: 1.5; }
-.payment-copy { text-align: center; margin: 17px 0 0; }
+.payment-copy { display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin: 17px 0 0; }
+.payment-copy img { width: 25px; height: 25px; object-fit: contain; }
 .form-error { color: #9d312e; background: #fff1f0; padding: 11px; font-size: .85rem; }
 .lookup { padding: 100px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 65px; align-items: center; }
 .lookup form { display: flex; align-items: flex-end; gap: 10px; }
