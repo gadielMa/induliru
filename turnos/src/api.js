@@ -14,7 +14,7 @@ const fallbackProfile = {
   category: 'Barbería',
   headline: 'Tu estilo, bien cuidado.',
   description: 'Cortes y barba con atención personalizada para que salgas sintiéndote vos mismo.',
-  location: 'Consultá la ubicación al reservar',
+  location: 'Atendido por Brian Melgar · Cuenca 2838 · WhatsApp: +54 9 11 3356-2753',
   accent: '#214b42',
   services: [
     { id: 'corte', name: 'Corte', price: 15000, description: 'Corte personalizado de 30 minutos.' },
