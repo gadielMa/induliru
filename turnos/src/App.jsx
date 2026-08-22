@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, Route, Routes, useParams } from 'react-router-dom';
-import { cancelAppointment, createPreference, findAppointment, getAvailability, getBusiness } from './api';
+import { cancelAppointment, createPreference, findAppointment, getAvailability, getAvailabilityMonth, getBusiness } from './api';
 
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' });
 const formatPrice = (price) => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(price));
 function InduliruHeader() { return <header className="global-header"><div className="global-header-inner"><a href="/" className="global-brand"><img src="/LOGO.png" alt="Logo de Induliru" />INDULIRU</a><nav className="global-menu"><a href="/#nosotros">Nosotros</a><a href="/#servicios">Servicios</a><Link to="/">Turnos</Link><a href="/#contacto">Contacto</a></nav></div></header>; }
+const dateKey = (year, month, day) => `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+function InlineCalendar({ month, availableDates, selectedDate, onSelect, onMonthChange, loading }) {
+  const [year, monthIndex] = month.split('-').map(Number);
+  const firstDay = new Date(year, monthIndex - 1, 1).getDay();
+  const mondayOffset = (firstDay + 6) % 7;
+  const days = new Date(year, monthIndex, 0).getDate();
+  const available = new Set(availableDates);
+  const label = new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(year, monthIndex - 1, 1));
+  const cells = Array.from({ length: mondayOffset + days }, (_, index) => index < mondayOffset ? null : index - mondayOffset + 1);
+  const shift = (amount) => { const next = new Date(year, monthIndex - 1 + amount, 1); onMonthChange(`${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`); };
+  return <div className="inline-calendar" aria-label="Elegí una fecha disponible"><div className="inline-calendar-head"><button type="button" onClick={() => shift(-1)} aria-label="Mes anterior">←</button><strong>{label.charAt(0).toUpperCase()}{label.slice(1)}</strong><button type="button" onClick={() => shift(1)} aria-label="Mes siguiente">→</button></div><div className="inline-calendar-weekdays">{['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day, index) => <span key={`${day}-${index}`}>{day}</span>)}</div><div className="inline-calendar-grid">{cells.map((day, index) => day === null ? <span key={`blank-${index}`} /> : (() => { const value = dateKey(year, monthIndex - 1, day); const enabled = available.has(value); return <button type="button" key={value} disabled={!enabled || loading} className={value === selectedDate ? 'selected' : ''} onClick={() => onSelect(value)}>{day}</button>; })())}</div>{loading && <p className="calendar-loading">Buscando fechas disponibles…</p>}<p className="calendar-help-text">Elegí una fecha resaltada para ver sus horarios.</p></div>;
+}
 
 function Home() {
   return <main className="platform">
@@ -29,6 +41,9 @@ function BookingPage() {
   const [form, setForm] = useState({ name: '', dni: '', service: '', date: '', time: '' });
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const [calendarMonth, setCalendarMonth] = useState(today.slice(0, 7));
+  const [availableDates, setAvailableDates] = useState([]);
+  const [loadingDates, setLoadingDates] = useState(false);
   const [saving, setSaving] = useState(false);
   const [lookupDni, setLookupDni] = useState('');
   const [appointment, setAppointment] = useState();
@@ -38,6 +53,13 @@ function BookingPage() {
     setBusiness(undefined); setError(''); setForm({ name: '', dni: '', service: '', date: '', time: '' }); setSlots([]);
     getBusiness(slug).then(setBusiness).catch((err) => setError(err.message));
   }, [slug]);
+
+  useEffect(() => {
+    let active = true;
+    setLoadingDates(true);
+    getAvailabilityMonth(slug, calendarMonth).then((result) => { if (active) setAvailableDates(result.available_dates || []); }).catch((err) => { if (active) setError(err.message); }).finally(() => { if (active) setLoadingDates(false); });
+    return () => { active = false; };
+  }, [slug, calendarMonth]);
 
   async function selectDate(date) {
     setForm((current) => ({ ...current, date, time: '' })); setSlots([]);
@@ -80,7 +102,7 @@ function BookingPage() {
     <section className="hero-panel"><div><span className="eyebrow">{business.category}</span><h1>{business.name}</h1><p>{business.headline}</p><a className="hero-cta" href="#reserva">Quiero un turno <span>→</span></a><div className="hero-meta">{business.location} <span>·</span> Reservá online en minutos</div></div><div className="hero-orb" aria-hidden="true">✦</div></section>
     <section className="intro"><p>{business.description}</p><div className="trust"><span>Atención personalizada</span><span>Pago seguro</span><span>Confirmación online</span></div></section>
     <section className="services" aria-labelledby="services-title"><div className="section-heading"><span className="eyebrow">SERVICIOS</span><h2>Elegí tu próximo look.</h2></div><div className="service-grid">{business.services.map((service) => <article className="service-card" key={service.id}><h3>{service.name}</h3><p>{service.description}</p><strong>{formatPrice(service.price)}</strong><button onClick={() => { setForm((current) => ({ ...current, service: service.id })); document.getElementById('reserva').scrollIntoView({ behavior: 'smooth' }); }}>Elegir servicio <span>→</span></button></article>)}</div></section>
-    <section className="booking-section" id="reserva"><div className="section-heading"><span className="eyebrow">RESERVÁ TU TURNO</span><h2>Tu próximo look empieza acá.</h2><p>Seleccioná el servicio, fecha y horario que mejor te quede.</p></div><form className="booking-card" onSubmit={submit}><label>Nombre y apellido<input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Ej. María Fernández" /></label><label>DNI<input required inputMode="numeric" maxLength="8" value={form.dni} onChange={(e) => setForm({ ...form, dni: e.target.value.replace(/\D/g, '') })} placeholder="Sin puntos" /></label><label>Servicio<select required value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}><option value="">Elegí un servicio</option>{business.services.map((item) => <option value={item.id} key={item.id}>{item.name} — {formatPrice(item.price)}</option>)}</select></label><label>Fecha<input required type="date" min={today} value={form.date} onChange={(e) => selectDate(e.target.value)} /></label><fieldset><legend>Horario</legend>{!form.date && <p className="muted">Primero elegí una fecha.</p>}{loadingSlots && <p className="muted">Buscando horarios…</p>}{form.date && !loadingSlots && slots.length === 0 && <p className="muted">No hay horarios disponibles para ese día.</p>}<div className="slots">{slots.map((slot) => <button type="button" className={form.time === slot ? 'selected' : ''} key={slot} onClick={() => setForm({ ...form, time: slot })}>{slot}</button>)}</div></fieldset>{error && <p className="form-error" role="alert">{error}</p>}<button className="button submit" disabled={saving || !form.time}>{saving ? 'Redirigiendo al pago…' : 'Continuar al pago'}</button><p className="payment-copy">Pago seguro procesado por Mercado Pago.</p></form></section>
+    <section className="booking-section" id="reserva"><div className="section-heading"><span className="eyebrow">RESERVÁ TU TURNO</span><h2>Tu próximo look empieza acá.</h2><p>Elegí primero una fecha disponible y después el horario que mejor te quede.</p></div><form className="booking-card" onSubmit={submit}><label>Nombre y apellido<input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Ej. María Fernández" /></label><label>DNI<input required inputMode="numeric" maxLength="8" value={form.dni} onChange={(e) => setForm({ ...form, dni: e.target.value.replace(/\D/g, '') })} placeholder="Sin puntos" /></label><label>Servicio<select required value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}><option value="">Elegí un servicio</option>{business.services.map((item) => <option value={item.id} key={item.id}>{item.name} — {formatPrice(item.price)}</option>)}</select></label><fieldset><legend>Fecha</legend><InlineCalendar month={calendarMonth} availableDates={availableDates} selectedDate={form.date} onSelect={selectDate} onMonthChange={setCalendarMonth} loading={loadingDates} /></fieldset><fieldset><legend>Horario</legend>{!form.date && <p className="muted">Elegí una fecha disponible en el calendario.</p>}{loadingSlots && <p className="muted">Buscando horarios…</p>}{form.date && !loadingSlots && slots.length === 0 && <p className="muted">No hay horarios disponibles para ese día.</p>}<div className="slots">{slots.map((slot) => <button type="button" className={form.time === slot ? 'selected' : ''} key={slot} onClick={() => setForm({ ...form, time: slot })}>{slot}</button>)}</div></fieldset>{error && <p className="form-error" role="alert">{error}</p>}<button className="button submit" disabled={saving || !form.time}>{saving ? 'Redirigiendo al pago…' : 'Continuar al pago'}</button><p className="payment-copy">Pago seguro procesado por Mercado Pago.</p></form></section>
     <section className="lookup"><div><span className="eyebrow">¿YA TENÉS TURNO?</span><h2>Consultalo o cancelalo.</h2></div><form onSubmit={searchAppointment}><label>DNI<input inputMode="numeric" maxLength="8" value={lookupDni} onChange={(e) => setLookupDni(e.target.value.replace(/\D/g, ''))} placeholder="Ingresá tu DNI" required /></label><button className="button outline">Ver mi turno</button></form>{lookupError && <p className="form-error">{lookupError}</p>}{appointment === null && <p className="muted">No encontramos un turno activo con ese DNI.</p>}{appointment && <div className="appointment"><strong>{appointment.name}</strong><span>{business.services.find((item) => item.id === appointment.service)?.name || appointment.service}</span><span>{new Date(`${appointment.booking_date}T12:00:00`).toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })} · {appointment.booking_time.slice(0, 5)} hs</span>{appointment.status === 'cancelled' ? <em>Turno cancelado</em> : <button onClick={cancel}>Cancelar turno</button>}</div>}</section>
     <SiteFooter />
   </main>;

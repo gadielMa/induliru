@@ -55,6 +55,10 @@ export function getAvailability(slug, date) {
   return request(`availability?business=${encodeURIComponent(slug)}&date=${encodeURIComponent(date)}`);
 }
 
+export function getAvailabilityMonth(slug, month) {
+  return request(`availability?business=${encodeURIComponent(slug)}&month=${encodeURIComponent(month)}`);
+}
+
 export function createPreference(payload) {
   return request('create-preference', { method: 'POST', body: JSON.stringify(payload) });
 }
