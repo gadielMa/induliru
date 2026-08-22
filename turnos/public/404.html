@@ -1,0 +1,7 @@
+<!doctype html><html><head><meta charset="utf-8"><script>
+  // GitHub Pages entrega 404 para rutas SPA. Conservamos la ruta y volvemos a la app.
+  const base = '/turnos/';
+  const route = location.pathname.startsWith(base) ? location.pathname.slice(base.length) : '';
+  location.replace(base + '?route=' + encodeURIComponent(route + location.search + location.hash));
+</script></head><body></body></html>
+
