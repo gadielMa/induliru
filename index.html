@@ -270,6 +270,9 @@
       font-weight: normal;
     }
 
+    .numero-infinito { font-size: 3.25rem; line-height: .8; }
+    .numero-infinito small { margin-top: 8px; }
+
     .contacto {
       background: white;
     }
@@ -362,18 +365,20 @@
         font-size: 2rem;
       }
 
+      .numero-infinito { font-size: 2.6rem; }
+
       .footer-flex { width: calc(100% - 32px); padding: 26px 0; font-size: .82rem; }
       .footer-links { gap: 10px 14px; }
     }
 
     /* Contacto e íconos */
 
-    .contacto-datos i {
+    .contacto-datos .contact-icon {
       width: 25px;
       min-width: 25px;
-      color: var(--verde);
-      font-size: 25px;
-      text-align: center;
+      height: 25px;
+      object-fit: contain;
+      flex-shrink: 0;
     }
 
     .contacto-datos {
@@ -397,15 +402,6 @@
       border-bottom: none;
     }
 
-    .contacto-datos svg {
-      display: block;
-      width: 25px;
-      height: 25px;
-      min-width: 25px;
-      color: var(--verde);
-      stroke-width: 2;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 
@@ -537,7 +533,7 @@
               <small>Visión</small>
             </div>
 
-            <div class="numero">
+            <div class="numero numero-infinito">
               ∞
               <small>Posibilidades</small>
             </div>
@@ -565,29 +561,29 @@
 
           <br>
 
-          <a href="mailto:hola@induliru.com" class="boton principal">
+          <a href="https://wa.me/5491172657749?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20Induliru." class="boton principal" target="_blank" rel="noopener">
             Escribinos →
           </a>
         </div>
 
         <div class="contacto-datos">
           <a href="https://wa.me/5491172657749" target="_blank">
-            <i class="fa-brands fa-whatsapp"></i>
+            <img class="contact-icon" src="WSP_LOGO.png" alt="">
             WhatsApp: +54 9 11 7265-7749
           </a>
 
           <a href="https://www.instagram.com/induliru.tech/" target="_blank">
-            <i class="fa-brands fa-instagram"></i>
+            <img class="contact-icon" src="INSTA_LOGO.png" alt="">
             Instagram: @induliru.tech
           </a>
 
           <a href="mailto:hola@induliru.com">
-            <i class="fa-solid fa-envelope"></i>
+            <img class="contact-icon" src="GMAIL_LOGO.png" alt="">
             Email: hola@induliru.com
           </a>
 
           <a href="#inicio">
-            <i class="fa-solid fa-location-dot"></i>
+            <img class="contact-icon" src="MAPS_LOGO.png" alt="">
             Buenos Aires, Argentina
           </a>
         </div>
