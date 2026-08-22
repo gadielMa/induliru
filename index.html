@@ -340,16 +340,19 @@
     @media (max-width: 750px) {
       .contenedor { width: calc(100% - 32px); }
 
-      nav { height: 60px; gap: 8px; overflow: hidden; }
+      header { overflow-x: auto; scrollbar-width: none; }
+      header::-webkit-scrollbar { display: none; }
+      header .contenedor { width: max-content; min-width: 100%; margin: 0; }
+      nav { width: max-content; min-width: calc(100vw - 32px); height: 60px; padding: 0 16px; gap: 14px; justify-content: flex-start; }
 
       .logo { gap: 8px; font-size: .86rem; letter-spacing: 1.5px; white-space: nowrap; }
       .logo img { width: 32px; height: 32px; }
 
       .menu {
-        gap: 8px;
-        flex: 1;
-        justify-content: flex-end;
-        font-size: .62rem;
+        gap: 14px;
+        flex: 0 0 auto;
+        justify-content: flex-start;
+        font-size: .72rem;
         white-space: nowrap;
       }
 
