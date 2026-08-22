@@ -30,9 +30,10 @@ jobs:
       - run: npm run build
       - name: Prepare the complete site
         run: |
-          mkdir -p public-site/turnos
+          mkdir -p public-site/turnos/brian
           cp index.html LOGO.png INDULIRU_CRUZ.png CNAME public-site/
           cp -R dist/* public-site/turnos/
+          cp dist/index.html public-site/turnos/brian/index.html
           cp dist/404.html public-site/404.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
