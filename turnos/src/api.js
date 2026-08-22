@@ -9,17 +9,17 @@ const config = {
 };
 
 const fallbackProfile = {
-  name: 'Antonella Morselli',
-  slug: 'antonella-morselli',
-  category: 'Masajista profesional',
-  headline: 'Un espacio para volver a sentirte bien.',
-  description: 'Sesiones personalizadas para aliviar tensiones, recuperar movilidad y regalarte un momento de bienestar.',
-  location: 'Villa Devoto, CABA',
-  accent: '#3f6659',
+  name: 'BrianBarber',
+  slug: 'brian',
+  category: 'Barbería',
+  headline: 'Tu estilo, bien cuidado.',
+  description: 'Cortes y barba con atención personalizada para que salgas sintiéndote vos mismo.',
+  location: 'Consultá la ubicación al reservar',
+  accent: '#214b42',
   services: [
-    { id: 'descontracturante', name: 'Masaje descontracturante', price: '$30.000', description: 'Para aliviar dolores y contracturas musculares.' },
-    { id: 'relajante', name: 'Masaje relajante', price: '$25.000', description: 'Una pausa profunda para cuerpo y mente.' },
-    { id: 'deportivo', name: 'Masaje deportivo', price: '$35.000', description: 'Recuperación y prevención para una vida en movimiento.' },
+    { id: 'corte', name: 'Corte', price: 15000, description: 'Corte personalizado de 30 minutos.' },
+    { id: 'corte-y-barba', name: 'Corte y barba', price: 18000, description: 'Corte y arreglo de barba en una sesión.' },
+    { id: 'barba', name: 'Barba', price: 8000, description: 'Perfilado y arreglo de barba.' },
   ],
 };
 
@@ -66,4 +66,3 @@ export function findAppointment(slug, dni) {
 export function cancelAppointment(id, dni, business_slug) {
   return request('cancel-booking', { method: 'POST', body: JSON.stringify({ id, dni, business_slug }) });
 }
-
