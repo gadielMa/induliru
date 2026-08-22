@@ -97,8 +97,8 @@
     }
 
     .hero {
-      min-height: 100vh;
-      padding: 140px 0 80px;
+      min-height: 0;
+      padding: 130px 0 80px;
       display: flex;
       align-items: center;
       background:
@@ -190,7 +190,7 @@
     }
 
     section {
-      padding: 110px 0;
+      padding: 80px 0;
     }
 
     .encabezado-seccion {
@@ -256,16 +256,22 @@
     }
 
     .numeros {
-      display: flex;
-      gap: 45px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
       margin-top: 35px;
     }
 
     .numero {
       color: var(--dorado);
+      display: grid;
+      grid-template-rows: 58px auto;
       font-size: 2.5rem;
       font-weight: bold;
+      text-align: center;
     }
+
+    .numero-valor { line-height: 1; }
 
     .numero small {
       display: block;
@@ -274,8 +280,7 @@
       font-weight: normal;
     }
 
-    .numero-infinito { font-size: 3.25rem; line-height: .8; }
-    .numero-infinito small { margin-top: 8px; }
+    .numero-infinito .numero-valor { font-size: 3.4rem; line-height: .75; }
 
     .contacto {
       background: white;
@@ -304,7 +309,7 @@
     footer {
       border-top: 1px solid #dce5e3;
       color: #526575;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
     }
 
     .footer-flex {
@@ -319,6 +324,7 @@
     }
 
     .footer-copy { margin: 0; }
+    .footer-copy b { color: #071b39; font-weight: 700; }
 
     .footer-links {
       display: flex;
@@ -332,9 +338,19 @@
     .footer-links img { width: 20px; height: 20px; object-fit: contain; }
 
     @media (max-width: 750px) {
+      .contenedor { width: calc(100% - 32px); }
+
+      nav { height: 60px; gap: 8px; overflow: hidden; }
+
+      .logo { gap: 8px; font-size: .86rem; letter-spacing: 1.5px; white-space: nowrap; }
+      .logo img { width: 32px; height: 32px; }
+
       .menu {
-        gap: 15px;
-        font-size: 0.8rem;
+        gap: 8px;
+        flex: 1;
+        justify-content: flex-end;
+        font-size: .62rem;
+        white-space: nowrap;
       }
 
       .hero-grid,
@@ -345,8 +361,10 @@
       }
 
       .hero {
-        padding-top: 120px;
+        padding: 96px 0 64px;
       }
+
+      section { padding: 64px 0; }
 
       .imagen-hero {
         min-height: 300px;
@@ -362,14 +380,15 @@
       }
 
       .numeros {
-        gap: 20px;
+        gap: 12px;
       }
 
       .numero {
-        font-size: 2rem;
+        grid-template-rows: 52px auto;
+        font-size: 2.25rem;
       }
 
-      .numero-infinito { font-size: 2.6rem; }
+      .numero-infinito .numero-valor { font-size: 3.25rem; }
 
       .footer-flex { width: calc(100% - 32px); padding: 26px 0; font-size: .82rem; }
       .footer-links { gap: 10px 14px; }
@@ -436,12 +455,12 @@
           <div class="etiqueta">Pensar distinto · Crear mejor</div>
 
           <h1>
-            Ideas que se convierten en
-            <span>impacto.</span>
+            Creamos software de calidad desde
+            <span>tus ideas.</span>
           </h1>
 
           <p>
-            En INDULIRU unimos innovación, calidad y desarrollo
+            En <b>Induliru</b> unimos innovación, calidad y desarrollo
             para crear soluciones que hacen avanzar a las personas
             y a las organizaciones.
           </p>
@@ -533,17 +552,17 @@
 
           <div class="numeros">
             <div class="numero">
-              01
+              <span class="numero-valor">01</span>
               <small>Visión</small>
             </div>
 
             <div class="numero numero-infinito">
-              ∞
+              <span class="numero-valor">∞</span>
               <small>Posibilidades</small>
             </div>
 
             <div class="numero">
-              100%
+              <span class="numero-valor">100%</span>
               <small>Compromiso</small>
             </div>
           </div>
@@ -599,7 +618,7 @@
 
   <footer>
     <div class="footer-flex">
-      <p class="footer-copy">© 2026 Induliru. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p>
+      <p class="footer-copy">© 2026 <b>Induliru</b>. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p>
       <div class="footer-links">
         <a href="https://wa.me/5491172657749" target="_blank" rel="noopener"><img src="WSP_LOGO.png" alt="">WhatsApp: +54 9 11 7265-7749</a>
         <a href="https://www.instagram.com/induliru.tech/" target="_blank" rel="noopener"><img src="INSTA_LOGO.png" alt="">Instagram: @induliru.tech</a>
