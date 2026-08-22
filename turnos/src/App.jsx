@@ -9,7 +9,7 @@ function Home() {
   return <main className="platform">
     <header className="platform-nav"><Link to="/" className="brand">INDULIRU</Link><Link className="platform-nav-link" to="/brian">Ver un ejemplo</Link></header>
     <section className="platform-hero">
-      <div><span className="eyebrow">INDULIRU · TURNOS</span><h1>Tu agenda online.<br /><em>Lista para vender.</em></h1><p>Una página profesional para que tus clientes elijan servicio, horario y paguen su reserva desde el celular.</p><div className="platform-actions"><a className="button" href="mailto:hola@induliru.com?subject=Quiero%20mi%20plataforma%20de%20turnos">Quiero mi plataforma</a><Link className="text-link" to="/brian">Ver BrianBarber en vivo →</Link></div></div>
+      <div><span className="eyebrow">INDULIRU · TURNOS</span><h1>Tu agenda online.<br /><em>Lista para vender.</em></h1><p>Una página profesional para que tus clientes elijan servicio, horario y paguen su reserva desde el celular.</p><div className="platform-actions"><a className="button" href="https://wa.me/5491172657749?text=Hola%2C%20quiero%20mi%20plataforma%20de%20turnos%20Induliru." target="_blank" rel="noreferrer">Quiero mi plataforma</a><Link className="text-link" to="/brian">Ver BrianBarber en vivo →</Link></div></div>
       <aside className="offer-card"><span>LANZAMIENTO</span><strong>$100.000</strong><p>Pago único</p><hr /><b>5 años sin costo de plataforma</b><small>Sin cuotas mensuales. Mercado Pago cobra sus comisiones habituales.</small></aside>
     </section>
     <section className="platform-proof"><p>Todo lo que necesitás para ordenar tus turnos y dar una imagen profesional desde el primer día.</p><div><span>Reservas 24/7</span><span>Pago online</span><span>Agenda editable</span></div></section>
