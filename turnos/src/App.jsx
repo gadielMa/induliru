@@ -6,7 +6,19 @@ const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argent
 const formatPrice = (price) => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(price));
 
 function Home() {
-  return <Navigate to="/brian" replace />;
+  return <main className="platform">
+    <header className="platform-nav"><Link to="/" className="brand">INDULIRU</Link><Link className="platform-nav-link" to="/brian">Ver un ejemplo</Link></header>
+    <section className="platform-hero">
+      <div><span className="eyebrow">INDULIRU · TURNOS</span><h1>Tu agenda online.<br /><em>Lista para vender.</em></h1><p>Una página profesional para que tus clientes elijan servicio, horario y paguen su reserva desde el celular.</p><div className="platform-actions"><a className="button" href="mailto:hola@induliru.com?subject=Quiero%20mi%20plataforma%20de%20turnos">Quiero mi plataforma</a><Link className="text-link" to="/brian">Ver BrianBarber en vivo →</Link></div></div>
+      <aside className="offer-card"><span>LANZAMIENTO</span><strong>$100.000</strong><p>Pago único</p><hr /><b>5 años sin costo de plataforma</b><small>Sin cuotas mensuales. Mercado Pago cobra sus comisiones habituales.</small></aside>
+    </section>
+    <section className="platform-proof"><p>Todo lo que necesitás para ordenar tus turnos y dar una imagen profesional desde el primer día.</p><div><span>Reservas 24/7</span><span>Pago online</span><span>Agenda editable</span></div></section>
+    <section className="how-it-works"><div className="section-heading"><span className="eyebrow">ASÍ DE SIMPLE</span><h2>Vos atendés.<br />La plataforma ordena.</h2></div><ol><li><span>01</span><div><h3>Nos pasás tu información</h3><p>Servicios, precios, horarios, fotos y datos de contacto.</p></div></li><li><span>02</span><div><h3>Generás tu link de Mercado Pago</h3><p>Con un link de cobro de Mercado Pago ya podés recibir reservas pagas.</p></div></li><li><span>03</span><div><h3>Publicamos tu página</h3><p>Recibís una web con agenda online para compartir por WhatsApp, Instagram o Google.</p></div></li></ol></section>
+    <section className="tutorial"><div className="section-heading"><span className="eyebrow">VIDEO TUTORIAL</span><h2>Así se pone en marcha.</h2><p>El único paso técnico que necesitás hacer es crear tu link de Mercado Pago. Del resto nos ocupamos nosotros.</p></div><video controls preload="metadata" playsInline><source src="/turnos/tutorial.mov" type="video/quicktime" />Tu navegador no puede reproducir este video.</video></section>
+    <section className="testimonials"><span className="eyebrow">CLIENTES FELICES</span><h2>Negocios reales,<br />menos vueltas.</h2><div className="testimonial-grid"><figure><blockquote>“La aplicación anda genial. Mis clientes ya pueden elegir su horario sin escribirme a cada rato.”</blockquote><figcaption><strong>Brian</strong><span>BrianBarber</span></figcaption></figure><figure><blockquote>“Desde que la uso aumentaron mis clientes de masajes. Reservar se volvió mucho más fácil.”</blockquote><figcaption><strong>Antonella</strong><span>Masajista profesional</span></figcaption></figure></div></section>
+    <section className="terms" id="terminos"><span className="eyebrow">CONDICIONES COMERCIALES</span><h2>Claro desde el inicio.</h2><p>El pago único de $100.000 incluye la configuración inicial y el uso de la plataforma de turnos por cinco años, sin abono mensual de plataforma. Las comisiones de Mercado Pago y servicios externos contratados por el negocio se cobran por separado. La personalización se realiza sobre la plantilla de Induliru y está sujeta a la información provista por cada profesional.</p><a className="text-link" href="mailto:hola@induliru.com?subject=Consulta%20sobre%20turnos%20Induliru">Consultar condiciones completas →</a></section>
+    <footer>Induliru · Turnos para profesionales independientes.</footer>
+  </main>;
 }
 
 function BookingPage() {
@@ -76,4 +88,3 @@ function BookingPage() {
 function Status({ title, detail }) { return <main className="directory"><span className="eyebrow">INDULIRU · TURNOS</span><h1>{title}</h1>{detail && <p>{detail}</p>}<Link className="button" to="/">Ir al inicio</Link></main>; }
 
 export default function App() { return <Routes><Route path="/" element={<Home />} /><Route path="/:slug" element={<BookingPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
-
