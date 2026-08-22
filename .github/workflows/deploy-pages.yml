@@ -33,7 +33,7 @@ jobs:
           mkdir -p public-site/turnos/brian
           cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png CNAME public-site/
           cp -R dist/* public-site/turnos/
-          cp WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png public-site/turnos/
+          cp LOGO.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png public-site/turnos/
           cp dist/index.html public-site/turnos/brian/index.html
           cp dist/404.html public-site/404.html
       - uses: actions/configure-pages@v5
