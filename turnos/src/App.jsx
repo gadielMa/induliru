@@ -6,7 +6,7 @@ const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argent
 const formatPrice = (price) => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(price));
 
 function Home() {
-  return <main className="directory"><span className="eyebrow">INDULIRU</span><h1>Reservas simples,<br />para profesionales reales.</h1><p>Elegí a tu profesional y reservá online.</p><Link className="button" to="/brian">Reservar con BrianBarber</Link></main>;
+  return <Navigate to="/brian" replace />;
 }
 
 function BookingPage() {
@@ -76,5 +76,4 @@ function BookingPage() {
 function Status({ title, detail }) { return <main className="directory"><span className="eyebrow">INDULIRU · TURNOS</span><h1>{title}</h1>{detail && <p>{detail}</p>}<Link className="button" to="/">Ir al inicio</Link></main>; }
 
 export default function App() { return <Routes><Route path="/" element={<Home />} /><Route path="/:slug" element={<BookingPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
-
 
