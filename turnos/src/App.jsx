@@ -4,10 +4,11 @@ import { cancelAppointment, createPreference, findAppointment, getAvailability, 
 
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' });
 const formatPrice = (price) => new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(price));
+function InduliruHeader() { return <header className="global-header"><div className="global-header-inner"><a href="/" className="global-brand"><img src="/LOGO.png" alt="Logo de Induliru" />INDULIRU</a><nav className="global-menu"><a href="/#nosotros">Nosotros</a><a href="/#servicios">Servicios</a><Link to="/">Turnos</Link><a href="/#contacto">Contacto</a></nav></div></header>; }
 
 function Home() {
   return <main className="platform">
-    <header className="platform-nav"><Link to="/" className="brand">INDULIRU</Link><Link className="platform-nav-link" to="/brian">Ver un ejemplo</Link></header>
+    <InduliruHeader />
     <section className="platform-hero">
       <div><span className="eyebrow">INDULIRU · TURNOS</span><h1>Tu agenda online.<br /><em>Lista para vender.</em></h1><p>Una página profesional para que tus clientes elijan servicio, horario y paguen su reserva desde el celular.</p><div className="platform-actions"><a className="button" href="https://wa.me/5491172657749?text=Hola%2C%20quiero%20mi%20plataforma%20de%20turnos%20Induliru." target="_blank" rel="noreferrer">Quiero mi plataforma</a><Link className="text-link" to="/brian">Ver BrianBarber en vivo →</Link></div></div>
       <aside className="offer-card"><span>LANZAMIENTO</span><strong>$100.000</strong><p>Pago único</p><hr /><b>5 años sin costo de plataforma</b><small>Sin cuotas mensuales. Mercado Pago cobra sus comisiones habituales.</small></aside>
@@ -74,7 +75,7 @@ function BookingPage() {
   const paymentStatus = new URLSearchParams(window.location.search).get('payment_status');
 
   return <main className="site" style={{ '--accent': business.accent }}>
-    <header className="topbar"><Link to="/" className="brand">INDULIRU</Link><a href="#reserva">Reservar turno</a></header>
+    <InduliruHeader />
     {paymentStatus && <div className={`notice ${paymentStatus === 'approved' ? 'success' : ''}`}>{paymentStatus === 'approved' ? 'Tu pago fue recibido. Te confirmaremos el turno a la brevedad.' : 'El pago quedó pendiente. Podés intentarlo nuevamente cuando quieras.'}</div>}
     <section className="hero-panel"><div><span className="eyebrow">{business.category}</span><h1>{business.name}</h1><p>{business.headline}</p><div className="hero-meta">{business.location} <span>·</span> Reservá online en minutos</div></div><div className="hero-orb" aria-hidden="true">✦</div></section>
     <section className="intro"><p>{business.description}</p><div className="trust"><span>Atención personalizada</span><span>Pago seguro</span><span>Confirmación online</span></div></section>
