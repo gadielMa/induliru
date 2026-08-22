@@ -295,17 +295,34 @@
     }
 
     footer {
-      padding: 28px 0;
-      color: var(--texto);
       border-top: 1px solid #dce5e3;
-      font-size: 0.85rem;
+      color: #526575;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .footer-flex {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
+      width: min(1120px, 90%);
+      margin: auto;
+      padding: 32px 0;
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      text-align: center;
+      font-size: 0.9rem;
     }
+
+    .footer-copy { margin: 0; }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a { display: inline-flex; align-items: center; gap: 7px; color: inherit; text-decoration: none; }
+    .footer-links img { width: 20px; height: 20px; object-fit: contain; }
 
     @media (max-width: 750px) {
       .menu {
@@ -345,14 +362,8 @@
         font-size: 2rem;
       }
 
-      .footer-flex {
-        display: block;
-      }
-
-      .footer-flex span {
-        display: block;
-        margin-top: 8px;
-      }
+      .footer-flex { width: calc(100% - 32px); padding: 26px 0; font-size: .82rem; }
+      .footer-links { gap: 10px 14px; }
     }
 
     /* Contacto e íconos */
@@ -587,9 +598,13 @@
   </main>
 
   <footer>
-    <div class="contenedor footer-flex">
-      <span>© 2026 INDULIRU. Innovación | Calidad | Desarrollo.</span>
-      <span>Hecho por induliru.tech</span>
+    <div class="footer-flex">
+      <p class="footer-copy">© 2026 Induliru. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p>
+      <div class="footer-links">
+        <a href="https://wa.me/5491172657749" target="_blank" rel="noopener"><img src="WSP_LOGO.png" alt="">WhatsApp: +54 9 11 7265-7749</a>
+        <a href="https://www.instagram.com/induliru.tech/" target="_blank" rel="noopener"><img src="INSTA_LOGO.png" alt="">Instagram: @induliru.tech</a>
+        <a href="mailto:hola@induliru.com"><img src="GMAIL_LOGO.png" alt="">Email: hola@induliru.com</a>
+      </div>
     </div>
   </footer>
 
