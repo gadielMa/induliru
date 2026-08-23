@@ -99,12 +99,16 @@ function BookingPage() {
   const paymentDate = paymentParams.get('booking_date');
   const paymentTime = paymentParams.get('booking_time');
   const paymentId = paymentParams.get('payment_id') || paymentParams.get('collection_id');
+  const paymentName = paymentParams.get('booking_name');
+  const paymentService = paymentParams.get('booking_service');
   const paymentWhen = paymentDate ? `${new Date(`${paymentDate}T12:00:00`).toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}${paymentTime ? ` a las ${paymentTime} hs` : ''}` : 'la fecha seleccionada';
-  const paymentWhatsapp = `https://wa.me/5491154907428?text=${encodeURIComponent(`Hola, acabo de pagar una reserva para ${paymentWhen}.${paymentId ? ` Número de pago: ${paymentId}.` : ''}`)}`;
+  const paymentWhatsappMessage = `Hola soy ${paymentName || 'un cliente'}, acabo de pagar una reserva para ${paymentWhen}.${paymentService ? ` ${paymentService}.` : ''}${paymentId ? ` Número de pago: ${paymentId}.` : ''}`;
+  const paymentWhatsapp = `https://wa.me/5491154907428?text=${encodeURIComponent(paymentWhatsappMessage)}`;
 
   return <main className="site" style={{ '--accent': business.accent }}>
     <InduliruHeader />
-    {paymentStatus && <div className={`notice ${paymentStatus === 'approved' ? 'success' : ''}`}>{paymentStatus === 'approved' ? <><span>Tu pago fue recibido. Te confirmaremos el turno a la brevedad.</span><a className="payment-whatsapp" href={paymentWhatsapp} target="_blank" rel="noreferrer"><img src="/turnos/WSP_LOGO.png" alt="" />Avisar por WhatsApp <span>↗</span></a></> : 'El pago quedó pendiente. Podés intentarlo nuevamente cuando quieras.'}</div>}
+    {paymentStatus === 'approved' && <section className="payment-result success" aria-label="Pago exitoso"><div className="payment-result-icon" aria-hidden="true">✓</div><div className="payment-result-copy"><span className="eyebrow">PAGO CONFIRMADO</span><h2>¡Pago exitoso!</h2><p>Tu reserva quedó registrada. Avisanos por WhatsApp para que podamos confirmarte el turno.</p><div className="payment-result-details"><span>{paymentWhen}</span>{paymentService && <span>{paymentService}</span>}{paymentId && <span>Pago #{paymentId}</span>}</div></div><a className="payment-whatsapp" href={paymentWhatsapp} target="_blank" rel="noreferrer"><img src="/turnos/WSP_LOGO.png" alt="" />Avisar por WhatsApp <span>↗</span></a></section>}
+    {paymentStatus && paymentStatus !== 'approved' && <div className="notice">El pago quedó pendiente. Podés intentarlo nuevamente cuando quieras.</div>}
     <section className="hero-panel"><div><span className="eyebrow">{business.category}</span><h1>{business.name}</h1><p>{business.headline}</p><a className="hero-cta" href="#reserva">Quiero un turno <span>→</span></a><div className="hero-meta">{business.location} <span>·</span> Reservá online en minutos</div></div><div className="hero-orb" aria-hidden="true">✦</div></section>
     <section className="intro"><p>{business.description}</p><div className="trust"><span>Atención personalizada</span><span>Pago seguro</span><span>Confirmación online</span></div></section>
     <section className="services" aria-labelledby="services-title"><div className="section-heading"><span className="eyebrow">SERVICIOS</span><h2>Elegí tu próximo look.</h2></div><div className="service-grid">{business.services.map((service) => <article className="service-card" key={service.id}><h3>{service.name}</h3><p>{service.description}</p><strong>{formatPrice(service.price)}</strong><button onClick={() => { setForm((current) => ({ ...current, service: service.id })); document.getElementById('reserva').scrollIntoView({ behavior: 'smooth' }); }}>Elegir servicio <span>→</span></button></article>)}</div></section>
