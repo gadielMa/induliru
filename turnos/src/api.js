@@ -44,7 +44,8 @@ async function request(name, options = {}) {
 export async function getBusiness(slug) {
   try {
     const data = await request(`public-business?slug=${encodeURIComponent(slug)}`);
-    return { ...fallbackProfile, ...data.business, slug, services: data.business.services?.length ? data.business.services : fallbackProfile.services };
+    const fallback = slug === fallbackProfile.slug ? fallbackProfile : {};
+    return { ...fallback, ...data.business, slug, services: Array.isArray(data.business.services) ? data.business.services : (fallback.services || []) };
   } catch (error) {
     if (slug === fallbackProfile.slug) return fallbackProfile;
     throw error;
