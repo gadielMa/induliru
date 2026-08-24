@@ -94,6 +94,10 @@ export function createPreference(payload) {
   return request('create-preference', { method: 'POST', body: JSON.stringify(payload) });
 }
 
+export function createBooking(payload) {
+  return request('create-booking', { method: 'POST', body: JSON.stringify(payload) });
+}
+
 export function findAppointment(slug, dni) {
   return request(`appointment?business=${encodeURIComponent(slug)}&dni=${encodeURIComponent(dni)}`);
 }

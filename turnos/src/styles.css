@@ -58,6 +58,7 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
 .payment-copy { display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; margin: 17px 0 0; }
 .payment-copy img { width: 112px; height: auto; object-fit: contain; }
 .form-error { color: #9d312e; background: #fff1f0; padding: 11px; font-size: .85rem; }
+.booking-confirmation { margin: 0; padding: 11px; border-radius: 12px; background: #e5f5eb; color: #17683a; font-size: .9rem; font-weight: 700; }
 .lookup { padding: 100px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 65px; align-items: center; }
 .lookup form { display: flex; align-items: flex-end; gap: 10px; }
 .lookup form label { flex: 1; margin: 0; }
