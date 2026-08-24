@@ -39,6 +39,8 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 600; letter-sp
 .service-card strong { margin-top: auto; font-size: 1.15rem; }
 .service-card button { border: 0; background: transparent; padding: 18px 0 0; color: var(--accent); text-align: left; font-weight: 700; }
 .service-card button span { font-size: 1.2rem; padding-left: 5px; }
+.service-card .service-contact { margin-top: auto; padding-top: 18px; color: var(--accent); font-weight: 700; text-decoration: none; }
+.service-card .service-contact span { font-size: 1.2rem; padding-left: 5px; }
 .booking-section { background: #e7e7dd; max-width: none; padding: 98px max(28px, calc((100vw - 1104px) / 2)); display: grid; grid-template-columns: minmax(300px, .9fr) minmax(360px, 1fr); gap: clamp(38px, 9vw, 150px); }
 .booking-card { background: #fffdf9; padding: clamp(24px, 4vw, 42px); border-radius: 4px; box-shadow: 0 15px 35px rgba(33, 47, 39, .08); }
 label, fieldset { display: block; border: 0; padding: 0; margin: 0 0 19px; font-size: .82rem; font-weight: 700; }
