@@ -1,0 +1,4 @@
+[submodule "biblia"]
+	path = biblia
+	url = https://github.com/gadielMa/biblia-apocripha.git
+	branch = main

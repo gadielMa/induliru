@@ -215,6 +215,10 @@
       gap: 20px;
     }
 
+    .tarjetas.productos {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .tarjeta {
       padding: 32px;
       background: var(--blanco);
@@ -234,6 +238,26 @@
 
     .tarjeta p {
       color: var(--texto);
+    }
+
+    .tarjeta.producto {
+      display: flex;
+      min-height: 270px;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+
+    .tarjeta.producto:hover {
+      transform: translateY(-6px);
+      border-color: var(--verde);
+      box-shadow: var(--shadow);
+    }
+
+    .tarjeta.producto .producto-link {
+      margin-top: 26px;
+      color: var(--verde);
+      font-weight: bold;
     }
 
     .nosotros {
@@ -442,7 +466,7 @@
 
       <div class="menu">
         <a href="#nosotros">Nosotros</a>
-        <a href="#servicios">Servicios</a>
+        <a href="#productos">Productos</a>
         <a href="/turnos/">Turnos</a>
         <a href="#contacto">Contacto</a>
       </div>
@@ -473,7 +497,7 @@
               Hablemos de tu proyecto →
             </a>
 
-            <a href="#servicios" class="boton secundario">
+            <a href="#productos" class="boton secundario">
               Conocé más
             </a>
           </div>
@@ -486,46 +510,39 @@
       </div>
     </section>
 
-    <section id="servicios">
+    <section id="productos">
       <div class="contenedor">
 
         <div class="encabezado-seccion">
-          <div class="etiqueta">Lo que nos mueve</div>
-          <h2>Una mirada integral para desafíos reales.</h2>
+          <div class="etiqueta">Productos digitales</div>
+          <h2>Herramientas para explorar y crecer.</h2>
           <p class="texto-suave">
-            Trabajamos con curiosidad, precisión y visión de futuro
-            para transformar cada desafío en una oportunidad.
+            Proyectos creados por Induliru para resolver necesidades reales
+            y acercar conocimiento a más personas.
           </p>
         </div>
 
-        <div class="tarjetas">
+        <div class="tarjetas productos">
 
-          <article class="tarjeta">
+          <a class="tarjeta producto" href="/turnos/">
             <div class="icono">✦</div>
-            <h3>Innovación</h3>
+            <h3>Induliru Turnos</h3>
             <p>
-              Exploramos nuevas ideas y tecnologías para diseñar
-              respuestas relevantes, simples y con propósito.
+              Una página profesional para que tus clientes elijan servicio,
+              horario y paguen su reserva desde el celular.
             </p>
-          </article>
+            <span class="producto-link">Conocer la plataforma →</span>
+          </a>
 
-          <article class="tarjeta">
-            <div class="icono">◆</div>
-            <h3>Calidad</h3>
+          <a class="tarjeta producto" href="/biblia/">
+            <div class="icono">✧</div>
+            <h3>Biblia Apócrifa</h3>
             <p>
-              Cuidamos cada detalle y construimos relaciones basadas
-              en la confianza, la excelencia y la mejora continua.
+              Una biblioteca digital para descubrir textos apócrifos,
+              documentos históricos y obras de consulta.
             </p>
-          </article>
-
-          <article class="tarjeta">
-            <div class="icono">↗</div>
-            <h3>Desarrollo</h3>
-            <p>
-              Convertimos la estrategia en acción para generar
-              resultados sostenibles y crecimiento a largo plazo.
-            </p>
-          </article>
+            <span class="producto-link">Abrir la biblioteca →</span>
+          </a>
 
         </div>
       </div>
