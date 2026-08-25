@@ -122,8 +122,8 @@ function BookingPage() {
     catch (err) { setLookupError(err.message); }
   }
 
-  if (error && !business) return <Status title={slug === 'mirelle' ? 'Não encontramos esta página' : 'No encontramos esta página'} detail={error} portuguese={slug === 'mirelle'} />;
-  if (!business) return <Status title={slug === 'mirelle' ? 'Carregando seu agendamento…' : 'Cargando tu turno…'} portuguese={slug === 'mirelle'} />;
+  if (error && !business) return <Status title={slug === 'mirelle' ? 'Não encontramos esta página' : 'No encontramos esta página'} detail={error} portuguese={slug === 'mirelle'} variant={slug} />;
+  if (!business) return <Status title={slug === 'mirelle' ? 'Carregando seu agendamento…' : 'Cargando tu turno…'} portuguese={slug === 'mirelle'} variant={slug} />;
   const portuguese = isPortuguese(business);
   const mirelle = slug === 'mirelle';
   const sardi = slug === 'sardi';
@@ -186,7 +186,7 @@ function BookingPage() {
 
 function SiteFooter() { return <footer className="site-footer"><p className="footer-copy">© 2026 <b>Induliru</b>. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p><div className="footer-links"><a href="https://wa.me/5491172657749" target="_blank" rel="noreferrer"><img src="/turnos/WSP_LOGO.png" alt="WhatsApp" />+54 9 11 7265-7749</a><a href="https://www.instagram.com/induliru.tech/" target="_blank" rel="noreferrer"><img src="/turnos/INSTA_LOGO.png" alt="Instagram" />@induliru.tech</a><a href="mailto:hola@induliru.com"><img src="/turnos/GMAIL_LOGO.png" alt="Email" />hola@induliru.com</a></div></footer>; }
 
-function Status({ title, detail, portuguese = false }) { return <main className="directory"><span className="eyebrow">INDULIRU · TURNOS</span><h1>{title}</h1>{detail && <p>{detail}</p>}<Link className="button" to="/">{portuguese ? 'Voltar ao início' : 'Ir al inicio'}</Link></main>; }
+function Status({ title, detail, portuguese = false, variant = '' }) { if (variant === 'sardi') return <main className="sardi-status"><div className="sardi-status-card"><img src="/turnos/sardi/sardi-logo-transparent.png" alt="Sardi Estudio Jurídico" /><span>ENRIQUE SARDI · ABOGADO</span><div className="sardi-status-loader" aria-hidden="true"><i /><i /><i /></div><h1>{title}</h1>{detail && <p>{detail}</p>}{detail ? <Link className="sardi-status-back" to="/turnos/sardi">Reintentar</Link> : <small>Estamos preparando tu espacio de consulta.</small>}</div></main>; return <main className="directory"><span className="eyebrow">INDULIRU · TURNOS</span><h1>{title}</h1>{detail && <p>{detail}</p>}<Link className="button" to="/">{portuguese ? 'Voltar ao início' : 'Ir al inicio'}</Link></main>; }
 function PanelRedirect({ to }) { useEffect(() => { window.location.replace(`${to}${window.location.search}`); }, [to]); return <Status title="Abriendo el panel…" />; }
 
 export default function App() { return <Routes><Route path="/" element={<Home />} /><Route path="/admin" element={<PanelRedirect to="https://induliru.com/turnos/admin/" />} /><Route path="/adminadmin" element={<PanelRedirect to="https://gadielma.github.io/turnos/adminadmin/" />} /><Route path="/:slug" element={<BookingPage />} /><Route path="*" element={<Navigate to="/" replace />} /></Routes>; }
