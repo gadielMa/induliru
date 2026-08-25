@@ -485,7 +485,7 @@
         <a href="/turnos/" data-i18n="navBookings">Turnos</a>
         <a href="#contacto" data-i18n="navContact">Contacto</a>
       </div>
-      <button class="language-toggle" id="language-toggle" type="button" aria-label="Cambiar idioma">PT</button>
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Cambiar idioma">🇧🇷</button>
     </nav>
   </header>
 
@@ -661,7 +661,7 @@
         document.title = toPortuguese ? 'INDULIRU | Inovação, qualidade e desenvolvimento' : spanishTitle;
         document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = toPortuguese ? portuguese[element.dataset.i18n] : element.dataset.es; });
         document.querySelectorAll('[data-i18n-html]').forEach((element) => { element.innerHTML = toPortuguese ? portuguese[element.dataset.i18nHtml] : element.dataset.esHtml; });
-        button.textContent = toPortuguese ? 'ES' : 'PT';
+        button.textContent = toPortuguese ? '🇦🇷' : '🇧🇷';
         button.setAttribute('aria-label', toPortuguese ? 'Cambiar a español' : 'Mudar para português');
         localStorage.setItem('induliru-language', toPortuguese ? 'pt' : 'es');
       };
