@@ -7,7 +7,7 @@ const argentinaDateParts = new Intl.DateTimeFormat('en-US', {
 }).formatToParts(new Date());
 const argentinaDatePart = (type) => argentinaDateParts.find((part) => part.type === type)?.value;
 const today = `${argentinaDatePart('year')}-${argentinaDatePart('month')}-${argentinaDatePart('day')}`;
-const formatPrice = (price, locale = 'es-AR') => new Intl.NumberFormat(locale, { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(Number(price));
+const formatPrice = (price, locale = 'es-AR') => new Intl.NumberFormat(locale, { style: 'currency', currency: locale === 'pt-BR' ? 'BRL' : 'ARS', maximumFractionDigits: 0 }).format(Number(price));
 const isPortuguese = (business) => business?.locale === 'pt-BR';
 function InduliruHeader({ locale }) { const portuguese = locale === 'pt-BR'; return <header className="global-header"><div className="global-header-inner"><a href="/" className="global-brand"><img src="/LOGO.png" alt="Logo Induliru" />INDULIRU</a><nav className="global-menu"><a href="/#nosotros">{portuguese ? 'Sobre nós' : 'Nosotros'}</a><a href="/#servicios">{portuguese ? 'Serviços' : 'Servicios'}</a><Link to="/">{portuguese ? 'Agendamentos' : 'Turnos'}</Link><a href="/#contacto">{portuguese ? 'Contato' : 'Contacto'}</a></nav></div></header>; }
 const dateKey = (year, month, day) => `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;

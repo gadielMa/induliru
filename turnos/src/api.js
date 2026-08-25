@@ -23,7 +23,7 @@ const fallbackProfiles = {
   },
   mirelle: {
     name: 'Mirelle', slug: 'mirelle', locale: 'pt-BR', category: 'Psicóloga', headline: 'Um espaço seguro para se escutar.',
-    description: 'Psicoterapia com escuta atenta, acolhimento e respeito ao seu tempo.', location: 'Atendimento online e presencial', accent: '#5d4b7b', slot_minutes: 60, services: [],
+    description: 'Psicoterapia com escuta atenta, acolhimento e respeito ao seu tempo.', location: 'Atendimento online e presencial', accent: '#5d4b7b', slot_minutes: 50, currency: 'BRL', services: [],
   },
   sardi: {
     name: 'Sardi Estudio', slug: 'sardi', category: 'Abogado · Asesor inmobiliario', headline: 'Asesoramiento jurídico e inmobiliario con mirada estratégica.',
