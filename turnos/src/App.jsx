@@ -8,6 +8,7 @@ const argentinaDateParts = new Intl.DateTimeFormat('en-US', {
 const argentinaDatePart = (type) => argentinaDateParts.find((part) => part.type === type)?.value;
 const today = `${argentinaDatePart('year')}-${argentinaDatePart('month')}-${argentinaDatePart('day')}`;
 const formatPrice = (price, locale = 'es-AR') => new Intl.NumberFormat(locale, { style: 'currency', currency: locale === 'pt-BR' ? 'BRL' : 'ARS', maximumFractionDigits: 0 }).format(Number(price));
+const gmailCompose = (email) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
 const isPortuguese = (business) => business?.locale === 'pt-BR';
 function InduliruHeader({ locale }) { const portuguese = locale === 'pt-BR'; return <header className="global-header"><div className="global-header-inner"><a href="/" className="global-brand"><img src="/LOGO.png" alt="Logo Induliru" />INDULIRU</a><nav className="global-menu"><a href="/#nosotros">{portuguese ? 'Sobre nós' : 'Nosotros'}</a><a href="/#servicios">{portuguese ? 'Serviços' : 'Servicios'}</a><Link to="/">{portuguese ? 'Agendamentos' : 'Turnos'}</Link><a href="/#contacto">{portuguese ? 'Contato' : 'Contacto'}</a></nav></div></header>; }
 const dateKey = (year, month, day) => `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -60,6 +61,18 @@ function BookingPage() {
     setBusiness(undefined); setError(''); setBookingNotice(''); setForm({ name: '', dni: '', service: '', date: '', time: '' }); setSlots([]);
     getBusiness(slug).then(setBusiness).catch((err) => setError(err.message));
   }, [slug]);
+
+  useEffect(() => {
+    const openGmail = (event) => {
+      const link = event.target.closest('a[href^="mailto:"]');
+      if (!link) return;
+      event.preventDefault();
+      const email = link.getAttribute('href').slice('mailto:'.length).split('?')[0];
+      window.open(gmailCompose(email), '_blank', 'noopener,noreferrer');
+    };
+    document.addEventListener('click', openGmail);
+    return () => document.removeEventListener('click', openGmail);
+  }, []);
 
   useEffect(() => {
     let active = true;
