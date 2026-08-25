@@ -96,6 +96,19 @@
       color: var(--verde);
     }
 
+    .language-toggle {
+      flex: 0 0 auto;
+      min-width: 38px;
+      height: 32px;
+      border: 1px solid #8da7a4;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--verde);
+      font: 800 .7rem 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+      letter-spacing: .06em;
+      cursor: pointer;
+    }
+
     .hero {
       min-height: 0;
       padding: 130px 0 80px;
@@ -380,6 +393,8 @@
         white-space: nowrap;
       }
 
+      .language-toggle { position: sticky; right: 0; background: var(--fondo); }
+
       .hero-grid,
       .nosotros-grid,
       .contacto-grid {
@@ -465,11 +480,12 @@
       </a>
 
       <div class="menu">
-        <a href="#nosotros">Nosotros</a>
-        <a href="#productos">Productos</a>
-        <a href="/turnos/">Turnos</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#nosotros" data-i18n="navAbout">Nosotros</a>
+        <a href="#productos" data-i18n="navProducts">Productos</a>
+        <a href="/turnos/" data-i18n="navBookings">Turnos</a>
+        <a href="#contacto" data-i18n="navContact">Contacto</a>
       </div>
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Cambiar idioma">PT</button>
     </nav>
   </header>
 
@@ -479,26 +495,19 @@
       <div class="contenedor hero-grid">
 
         <div>
-          <div class="etiqueta">Pensar distinto · Crear mejor</div>
+          <div class="etiqueta" data-i18n="heroTag">Pensar distinto · Crear mejor</div>
 
-          <h1>
-            Creamos software de calidad desde
-            <span>tus ideas.</span>
-          </h1>
+          <h1 data-i18n-html="heroTitle">Creamos software de calidad desde <span>tus ideas.</span></h1>
 
-          <p>
-            En <b>Induliru</b> unimos innovación, calidad y desarrollo
-            para crear soluciones que hacen avanzar a las personas
-            y a las organizaciones.
-          </p>
+          <p data-i18n-html="heroText">En <b>Induliru</b> unimos innovación, calidad y desarrollo para crear soluciones que hacen avanzar a las personas y a las organizaciones.</p>
 
           <div class="botones">
             <a href="#contacto" class="boton principal">
-              Hablemos de tu proyecto →
+              <span data-i18n="heroCta">Hablemos de tu proyecto →</span>
             </a>
 
             <a href="#productos" class="boton secundario">
-              Conocé más
+              <span data-i18n="heroMore">Conocé más</span>
             </a>
           </div>
         </div>
@@ -514,12 +523,9 @@
       <div class="contenedor">
 
         <div class="encabezado-seccion">
-          <div class="etiqueta">Productos digitales</div>
-          <h2>Herramientas para explorar y crecer.</h2>
-          <p class="texto-suave">
-            Proyectos creados por Induliru para resolver necesidades reales
-            y acercar conocimiento a más personas.
-          </p>
+          <div class="etiqueta" data-i18n="productsTag">Productos digitales</div>
+          <h2 data-i18n="productsTitle">Herramientas para explorar y crecer.</h2>
+          <p class="texto-suave" data-i18n="productsText">Proyectos creados por Induliru para resolver necesidades reales y acercar conocimiento a más personas.</p>
         </div>
 
         <div class="tarjetas productos">
@@ -527,21 +533,15 @@
           <a class="tarjeta producto" href="/turnos/">
             <div class="icono">✦</div>
             <h3>Induliru Turnos</h3>
-            <p>
-              Una página profesional para que tus clientes elijan servicio,
-              horario y paguen su reserva desde el celular.
-            </p>
-            <span class="producto-link">Conocer la plataforma →</span>
+            <p data-i18n="bookingProductText">Una página profesional para que tus clientes elijan servicio, horario y paguen su reserva desde el celular.</p>
+            <span class="producto-link" data-i18n="bookingProductLink">Conocer la plataforma →</span>
           </a>
 
           <a class="tarjeta producto" href="/biblia/">
             <div class="icono">✧</div>
             <h3>Biblia Apócrifa</h3>
-            <p>
-              Una biblioteca digital para descubrir textos apócrifos,
-              documentos históricos y obras de consulta.
-            </p>
-            <span class="producto-link">Abrir la biblioteca →</span>
+            <p data-i18n="bibleProductText">Una biblioteca digital para descubrir textos apócrifos, documentos históricos y obras de consulta.</p>
+            <span class="producto-link" data-i18n="bibleProductLink">Abrir la biblioteca →</span>
           </a>
 
         </div>
@@ -552,38 +552,31 @@
       <div class="contenedor nosotros-grid">
 
         <div>
-          <div class="etiqueta">Sobre INDULIRU</div>
-          <h2>El futuro se construye en equipo.</h2>
+          <div class="etiqueta" data-i18n="aboutTag">Sobre INDULIRU</div>
+          <h2 data-i18n="aboutTitle">El futuro se construye en equipo.</h2>
         </div>
 
         <div>
-          <p class="texto-suave">
-            Somos una marca que cree en el poder de las buenas preguntas,
-            el trabajo colaborativo y las soluciones que dejan una huella positiva.
-          </p>
+          <p class="texto-suave" data-i18n="aboutTextOne">Somos una marca que cree en el poder de las buenas preguntas, el trabajo colaborativo y las soluciones que dejan una huella positiva.</p>
 
           <br>
 
-          <p class="texto-suave">
-            Nuestro enfoque combina visión estratégica, sensibilidad humana
-            y ejecución rigurosa. Así logramos que las ideas no solo se vean bien:
-            funcionen.
-          </p>
+          <p class="texto-suave" data-i18n="aboutTextTwo">Nuestro enfoque combina visión estratégica, sensibilidad humana y ejecución rigurosa. Así logramos que las ideas no solo se vean bien: funcionen.</p>
 
           <div class="numeros">
             <div class="numero">
               <span class="numero-valor">01</span>
-              <small>Visión</small>
+              <small data-i18n="valueVision">Visión</small>
             </div>
 
             <div class="numero numero-infinito">
               <span class="numero-valor">∞</span>
-              <small>Posibilidades</small>
+              <small data-i18n="valuePossibilities">Posibilidades</small>
             </div>
 
             <div class="numero">
               <span class="numero-valor">100%</span>
-              <small>Compromiso</small>
+              <small data-i18n="valueCommitment">Compromiso</small>
             </div>
           </div>
         </div>
@@ -595,17 +588,14 @@
       <div class="contenedor contacto-grid">
 
         <div>
-          <div class="etiqueta">Empecemos</div>
-          <h2>¿Tenés una idea?</h2>
-          <p class="texto-suave">
-            Contanos qué querés construir. Nos encantaría escucharte
-            y encontrar juntos el próximo paso.
-          </p>
+          <div class="etiqueta" data-i18n="contactTag">Empecemos</div>
+          <h2 data-i18n="contactTitle">¿Tenés una idea?</h2>
+          <p class="texto-suave" data-i18n="contactText">Contanos qué querés construir. Nos encantaría escucharte y encontrar juntos el próximo paso.</p>
 
           <br>
 
           <a href="https://wa.me/5491172657749?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20Induliru." class="boton principal" target="_blank" rel="noopener">
-            Escribinos →
+            <span data-i18n="contactCta">Escribinos →</span>
           </a>
         </div>
 
@@ -638,7 +628,7 @@
 
   <footer>
     <div class="footer-flex">
-      <p class="footer-copy">© 2026 <b>Induliru</b>. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p>
+      <p class="footer-copy" data-i18n-html="footerText">© 2026 <b>Induliru</b>. Innovación | Calidad | Desarrollo. Todos los derechos reservados.</p>
       <div class="footer-links">
         <a href="https://wa.me/5491172657749" target="_blank" rel="noopener"><img src="WSP_LOGO.png" alt="WhatsApp">+54 9 11 7265-7749</a>
         <a href="https://www.instagram.com/induliru.tech/" target="_blank" rel="noopener"><img src="INSTA_LOGO.png" alt="Instagram">@induliru.tech</a>
@@ -646,6 +636,42 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    (() => {
+      const button = document.getElementById('language-toggle');
+      const spanishTitle = 'INDULIRU | Innovación, calidad y desarrollo';
+      const portuguese = {
+        navAbout: 'Sobre nós', navProducts: 'Produtos', navBookings: 'Agendamentos', navContact: 'Contato',
+        heroTag: 'PENSAR DIFERENTE · CRIAR MELHOR', heroTitle: 'Criamos software de qualidade a partir das <span>suas ideias.</span>',
+        heroText: 'Na <b>Induliru</b>, unimos inovação, qualidade e desenvolvimento para criar soluções que fazem pessoas e organizações avançarem.',
+        heroCta: 'Vamos falar do seu projeto →', heroMore: 'Conheça mais', productsTag: 'Produtos digitais', productsTitle: 'Ferramentas para explorar e crescer.',
+        productsText: 'Projetos criados pela Induliru para resolver necessidades reais e aproximar conhecimento de mais pessoas.',
+        bookingProductText: 'Uma página profissional para que seus clientes escolham o serviço, o horário e paguem a reserva pelo celular.', bookingProductLink: 'Conhecer a plataforma →',
+        bibleProductText: 'Uma biblioteca digital para descobrir textos apócrifos, documentos históricos e obras de consulta.', bibleProductLink: 'Abrir a biblioteca →',
+        aboutTag: 'SOBRE A INDULIRU', aboutTitle: 'O futuro se constrói em equipe.',
+        aboutTextOne: 'Somos uma marca que acredita no poder das boas perguntas, do trabalho colaborativo e das soluções que deixam uma marca positiva.',
+        aboutTextTwo: 'Nossa abordagem combina visão estratégica, sensibilidade humana e execução rigorosa. Assim, as ideias não apenas parecem boas: elas funcionam.',
+        valueVision: 'Visão', valuePossibilities: 'Possibilidades', valueCommitment: 'Compromisso', contactTag: 'VAMOS COMEÇAR', contactTitle: 'Você tem uma ideia?',
+        contactText: 'Conte-nos o que você quer construir. Vamos adorar ouvir e encontrar juntos o próximo passo.', contactCta: 'Fale conosco →',
+        footerText: '© 2026 <b>Induliru</b>. Inovação | Qualidade | Desenvolvimento. Todos os direitos reservados.'
+      };
+      const setLanguage = (toPortuguese) => {
+        document.documentElement.lang = toPortuguese ? 'pt-BR' : 'es';
+        document.title = toPortuguese ? 'INDULIRU | Inovação, qualidade e desenvolvimento' : spanishTitle;
+        document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = toPortuguese ? portuguese[element.dataset.i18n] : element.dataset.es; });
+        document.querySelectorAll('[data-i18n-html]').forEach((element) => { element.innerHTML = toPortuguese ? portuguese[element.dataset.i18nHtml] : element.dataset.esHtml; });
+        button.textContent = toPortuguese ? 'ES' : 'PT';
+        button.setAttribute('aria-label', toPortuguese ? 'Cambiar a español' : 'Mudar para português');
+        localStorage.setItem('induliru-language', toPortuguese ? 'pt' : 'es');
+      };
+      document.querySelectorAll('[data-i18n]').forEach((element) => { element.dataset.es = element.textContent; });
+      document.querySelectorAll('[data-i18n-html]').forEach((element) => { element.dataset.esHtml = element.innerHTML; });
+      const initialPortuguese = localStorage.getItem('induliru-language') === 'pt';
+      setLanguage(initialPortuguese);
+      button.addEventListener('click', () => setLanguage(document.documentElement.lang !== 'pt-BR'));
+    })();
+  </script>
 
 </body>
 
