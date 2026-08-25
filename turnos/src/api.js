@@ -27,7 +27,7 @@ const fallbackProfiles = {
   },
   sardi: {
     name: 'Sardi Estudio', slug: 'sardi', category: 'Abogado · Asesor inmobiliario', headline: 'Asesoramiento jurídico e inmobiliario con mirada estratégica.',
-    description: 'Sardi Estudio acompaña consultas y gestiones con atención personalizada, claridad y compromiso profesional.', location: 'Gestiones judiciales en Buenos Aires y Mendoza', accent: '#273a5f', slot_minutes: 60,
+    description: 'Sardi Estudio acompaña consultas y gestiones con atención personalizada, claridad y compromiso profesional.', location: 'Chivilcoy 1441, CABA · Gestiones judiciales en Buenos Aires y Mendoza', accent: '#273a5f', slot_minutes: 60,
     contact_whatsapp: '5491156166994', contact_email: 'sea.abogado@gmail.com', instagram: 'https://www.instagram.com/sardi.estudiojuridico/', reservation_amount: 1,
     services: [{ id: 'consulta', name: 'Consulta', price: 15000, description: 'Consulta jurídica e inmobiliaria personalizada.' }],
   },

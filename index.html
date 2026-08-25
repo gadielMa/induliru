@@ -98,7 +98,8 @@
 
     .language-toggle {
       flex: 0 0 auto;
-      min-width: 38px;
+      min-width: 74px;
+      padding: 0 10px;
       height: 32px;
       border: 1px solid #8da7a4;
       border-radius: 999px;
@@ -485,7 +486,7 @@
         <a href="/turnos/" data-i18n="navBookings">Turnos</a>
         <a href="#contacto" data-i18n="navContact">Contacto</a>
       </div>
-      <button class="language-toggle" id="language-toggle" type="button" aria-label="Cambiar idioma">🇧🇷</button>
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Cambiar idioma">🇧🇷 PT</button>
     </nav>
   </header>
 
@@ -661,7 +662,7 @@
         document.title = toPortuguese ? 'INDULIRU | Inovação, qualidade e desenvolvimento' : spanishTitle;
         document.querySelectorAll('[data-i18n]').forEach((element) => { element.textContent = toPortuguese ? portuguese[element.dataset.i18n] : element.dataset.es; });
         document.querySelectorAll('[data-i18n-html]').forEach((element) => { element.innerHTML = toPortuguese ? portuguese[element.dataset.i18nHtml] : element.dataset.esHtml; });
-        button.textContent = toPortuguese ? '🇦🇷' : '🇧🇷';
+        button.textContent = toPortuguese ? '🇦🇷 ES' : '🇧🇷 PT';
         button.setAttribute('aria-label', toPortuguese ? 'Cambiar a español' : 'Mudar para português');
         localStorage.setItem('induliru-language', toPortuguese ? 'pt' : 'es');
       };
