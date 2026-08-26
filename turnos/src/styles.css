@@ -50,6 +50,8 @@ fieldset legend { padding: 0; margin-bottom: 10px; }
 .slots { display: flex; gap: 8px; flex-wrap: wrap; }
 .slots button { padding: 10px 15px; border: 1px solid #aebbb2; border-radius: 2px; background: transparent; font-size: .86rem; }
 .slots button.selected, .slots button:hover { border-color: var(--accent); background: var(--accent); color: white; }
+.slot-workplace { display: flex; align-items: center; gap: .5rem; margin: 1rem 0 0; padding: .72rem .85rem; border: 1px solid #d8e3df; border-radius: 10px; background: #f4f8f6; color: #36534a; font-size: .9rem; font-weight: 700; }
+.slot-workplace i { width: .72rem; height: .72rem; flex: 0 0 auto; border-radius: 50%; box-shadow: 0 0 0 3px rgba(20,40,35,.08); }
 .button { display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 2px; min-height: 52px; padding: 0 24px; background: var(--accent, #3f6659); color: white; text-decoration: none; font-size: .87rem; font-weight: 700; transition: filter .2s, transform .2s; }
 .button:hover { filter: brightness(.92); transform: translateY(-1px); }
 .button:disabled { opacity: .55; cursor: wait; transform: none; }
