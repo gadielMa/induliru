@@ -15,12 +15,6 @@ const fallbackProfiles = {
     location: 'Atendido por Brian Melgar · Cuenca 2838 · WhatsApp: +54 9 11 3356-2753', accent: '#214b42', slot_minutes: 30,
     services: [{ id: 'corte', name: 'Corte', price: 15000, description: 'Corte personalizado de 30 minutos.' }, { id: 'corte-y-barba', name: 'Corte y barba', price: 18000, description: 'Corte y arreglo de barba en una sesión.' }, { id: 'barba', name: 'Barba', price: 8000, description: 'Perfilado y arreglo de barba.' }],
   },
-  antonella: {
-    name: 'Antonella Morselli', slug: 'antonella', category: 'Masajista profesional', headline: 'Un espacio para volver a sentirte bien.',
-    description: 'Sesiones personalizadas para aliviar tensiones, recuperar movilidad y regalarte un momento de bienestar.',
-    location: 'Villa Devoto, CABA', accent: '#3f6659', slot_minutes: 60,
-    services: [{ id: 'descontracturante', name: 'Masaje descontracturante', price: 30000, description: 'Para aliviar dolores y contracturas musculares.' }, { id: 'relajante', name: 'Masaje relajante', price: 25000, description: 'Una pausa profunda para cuerpo y mente.' }, { id: 'deportivo', name: 'Masaje deportivo', price: 35000, description: 'Recuperación y prevención para una vida en movimiento.' }],
-  },
   mirelle: {
     name: 'Mirelle', slug: 'mirelle', locale: 'pt-BR', category: 'Psicóloga', headline: 'Um espaço seguro para se escutar.',
     description: 'Psicoterapia com escuta atenta, acolhimento e respeito ao seu tempo.', location: 'Atendimento online e presencial', accent: '#5d4b7b', slot_minutes: 50, currency: 'BRL', services: [],
