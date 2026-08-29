@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://induliru.com/sitemap.xml

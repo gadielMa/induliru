@@ -3,15 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#3f6659" />
-    <meta name="description" content="Reservá tu turno online." />
-    <link rel="icon" type="image/png" href="/turnos/LOGO.png" />
-    <link rel="apple-touch-icon" href="/turnos/LOGO.png" />
+    <meta name="theme-color" content="#071b39" />
+    <meta name="description" content="Reservá turnos online de forma simple con las plataformas de Induliru." />
+    <meta name="robots" content="index, follow" />
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="../INDULIRU_CRUZ.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="../icons/induliru-512.png" />
     <title>Induliru · Turnos</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('../sw.js'));
+    </script>
   </body>
 </html>
-

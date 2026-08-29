@@ -1,0 +1,28 @@
+{
+  "name": "Induliru",
+  "short_name": "Induliru",
+  "description": "Software de calidad desde tus ideas.",
+  "id": "/",
+  "lang": "es-AR",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#f5f8f7",
+  "theme_color": "#071b39",
+  "icons": [
+    {
+      "src": "/icons/induliru-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/induliru-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

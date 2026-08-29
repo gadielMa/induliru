@@ -4,11 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="INDULIRU: innovación, calidad y desarrollo.">
+  <meta name="description" content="Induliru crea software a medida, plataformas de turnos y productos digitales con innovación, calidad y desarrollo.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Induliru">
+  <link rel="canonical" href="https://induliru.com/">
   <title>INDULIRU | Innovación, calidad y desarrollo</title>
 
-  <link rel="icon" type="image/png" href="LOGO.png">
-  <link rel="apple-touch-icon" href="LOGO.png">
+  <meta name="theme-color" content="#071b39">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Induliru">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" type="image/png" href="INDULIRU_CRUZ.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/induliru-512.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Induliru">
+  <meta property="og:title" content="Induliru | Software de calidad desde tus ideas">
+  <meta property="og:description" content="Software a medida, plataformas de turnos y productos digitales para hacer avanzar tus ideas.">
+  <meta property="og:url" content="https://induliru.com/">
+  <meta property="og:image" content="https://induliru.com/icons/induliru-512.png">
+  <meta property="og:image:alt" content="Logo de Induliru">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Induliru | Software de calidad desde tus ideas">
+  <meta name="twitter:description" content="Software a medida, plataformas de turnos y productos digitales.">
+  <meta name="twitter:image" content="https://induliru.com/icons/induliru-512.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -638,6 +658,19 @@
     </div>
   </footer>
 
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Induliru",
+      "url": "https://induliru.com/",
+      "logo": "https://induliru.com/icons/induliru-512.png",
+      "description": "Software a medida, plataformas de turnos y productos digitales.",
+      "email": "hola@induliru.com",
+      "sameAs": ["https://www.instagram.com/induliru.tech/"],
+      "address": {"@type": "PostalAddress", "addressLocality": "Buenos Aires", "addressCountry": "AR"}
+    }
+  </script>
   <script>
     (() => {
       const button = document.getElementById('language-toggle');
@@ -672,6 +705,11 @@
       setLanguage(initialPortuguese);
       button.addEventListener('click', () => setLanguage(document.documentElement.lang !== 'pt-BR'));
     })();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+    }
   </script>
 
 </body>

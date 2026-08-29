@@ -39,7 +39,8 @@ jobs:
       - name: Prepare the complete site
         run: |
           mkdir -p public-site/turnos/brian public-site/turnos/antonella public-site/turnos/mirelle public-site/turnos/sardi public-site/turnos/admin
-          cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png CNAME public-site/
+          cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png CNAME manifest.webmanifest sw.js offline.html robots.txt sitemap.xml public-site/
+          cp -R icons public-site/icons
           cp -R dist/* public-site/turnos/
           cp LOGO.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MERCADO_PAGO_LOGO.png public-site/turnos/
           cp dist/index.html public-site/turnos/brian/index.html
