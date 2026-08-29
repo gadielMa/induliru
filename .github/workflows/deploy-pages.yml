@@ -50,6 +50,7 @@ jobs:
           cp admin-source/admin.html public-site/turnos/admin/index.html
           cp admin-source/admin.js admin-source/supabase-config.js admin-source/styles.css public-site/turnos/admin/
           rsync -a --exclude='.git' biblia/ public-site/biblia/
+          rsync -a --include='*/' --include='*.html' --include='*.css' --exclude='*' legal/ public-site/legal/
           cp dist/404.html public-site/404.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
