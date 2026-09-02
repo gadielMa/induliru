@@ -38,7 +38,7 @@ jobs:
       - run: npm run build
       - name: Prepare the complete site
         run: |
-          mkdir -p public-site/turnos/brian public-site/turnos/antonella public-site/turnos/mirelle public-site/turnos/sardi public-site/turnos/admin
+          mkdir -p public-site/turnos/brian public-site/turnos/antonella public-site/turnos/mirelle public-site/turnos/sardi public-site/turnos/miro public-site/turnos/admin
           cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png data_fiscal.png CNAME manifest.webmanifest sw.js offline.html robots.txt sitemap.xml public-site/
           cp -R icons public-site/icons
           cp -R dist/* public-site/turnos/
@@ -47,6 +47,7 @@ jobs:
           cp dist/index.html public-site/turnos/antonella/index.html
           cp dist/index.html public-site/turnos/mirelle/index.html
           cp dist/index.html public-site/turnos/sardi/index.html
+          cp dist/index.html public-site/turnos/miro/index.html
           cp admin-source/admin.html public-site/turnos/admin/index.html
           cp admin-source/admin.js admin-source/supabase-config.js admin-source/styles.css public-site/turnos/admin/
           rsync -a --exclude='.git' biblia/ public-site/biblia/
