@@ -25,6 +25,14 @@ const fallbackProfiles = {
     contact_whatsapp: '5491156166994', contact_email: 'sea.abogado@gmail.com', instagram: 'https://www.instagram.com/sardi.estudiojuridico/', reservation_amount: 1,
     services: [{ id: 'consulta', name: 'Consulta', price: 15000, description: 'Consulta jurídica e inmobiliaria personalizada.' }],
   },
+  miro: {
+    name: 'Óptica Miró', slug: 'miro', category: 'Óptica', locale: 'es-AR',
+    headline: 'Cuidamos tu mirada con atención personalizada.',
+    description: 'Consulta óptica individual para evaluar tu visión y orientarte en la elección de tus lentes.',
+    location: 'Recoleta, CABA, Argentina', accent: '#c51f24', slot_minutes: 30,
+    booking_without_payment: true, contact_whatsapp: '5491154907428',
+    services: [{ id: 'consulta-optica', name: 'Consulta óptica', price: 5000, description: 'Evaluación y asesoramiento óptico personalizado.' }],
+  },
 };
 
 function functionUrl(name) {
