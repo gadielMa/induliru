@@ -1,0 +1,4 @@
+/* Miró uses black, red and yellow in the appointment lookup section. */
+.miro-site .lookup { background: #111; }
+.miro-site .lookup .eyebrow { color: #ffd21a; }
+.miro-site .lookup .outline { color: #ffd21a; border-color: #ffd21a; }

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles.css';
+import './miro-overrides.css';
 
 const pendingRoute = new URLSearchParams(window.location.search).get('route');
 if (pendingRoute) {
@@ -16,4 +17,3 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-
