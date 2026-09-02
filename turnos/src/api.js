@@ -30,7 +30,7 @@ const fallbackProfiles = {
     headline: 'Cuidamos tu mirada con atención personalizada.',
     description: 'Consulta óptica individual para evaluar tu visión y orientarte en la elección de tus lentes.',
     location: 'Av. Francisco Beiró 3268 · Villa del Parque, CABA', accent: '#c51f24', slot_minutes: 30,
-    booking_without_payment: true, contact_whatsapp: '5491166046476', contact_email: 'miro@induliru.com',
+    contact_whatsapp: '5491166046476', contact_email: 'miro@induliru.com',
     services: [{ id: 'consulta-optica', name: 'Consulta óptica', price: 5000, description: 'Evaluación y asesoramiento óptico personalizado.' }],
   },
 };
