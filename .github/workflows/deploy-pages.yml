@@ -30,6 +30,12 @@ jobs:
           repository: gadielMa/turnos
           ref: main
           path: admin-source
+      - name: Checkout Soy Pobre site
+        uses: actions/checkout@v4
+        with:
+          repository: gadielMa/soypobre
+          ref: main
+          path: soypobre-source
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -41,6 +47,7 @@ jobs:
           mkdir -p public-site/turnos/brian public-site/turnos/antonella public-site/turnos/mirelle public-site/turnos/sardi public-site/turnos/miro public-site/turnos/admin
           cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png data_fiscal.png CNAME manifest.webmanifest sw.js offline.html robots.txt sitemap.xml public-site/
           cp -R icons public-site/icons
+          rsync -a soypobre-source/ public-site/soypobre/
           cp -R dist/* public-site/turnos/
           cp LOGO.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MERCADO_PAGO_LOGO.png public-site/turnos/
           cp dist/index.html public-site/turnos/brian/index.html
