@@ -303,7 +303,7 @@
 
     .landing-pages { padding: 100px 0; background: #eef5f0; }
     .landing-pages .encabezado-seccion { margin-bottom: 34px; }
-    .landing-clientes { display: grid; grid-template-columns: minmax(0, 360px); }
+    .landing-clientes { display: grid; grid-template-columns: repeat(2, minmax(0, 360px)); gap: 20px; }
     .landing-cliente { display: block; padding: 26px; background: var(--blanco); border: 1px solid #b9d8c4; border-radius: 22px; }
     .landing-cliente img { display: block; width: 100%; height: 170px; object-fit: contain; background: #fff; margin-bottom: 18px; }
     .landing-cliente h3 { margin-bottom: 8px; }
@@ -478,6 +478,8 @@
         grid-template-columns: 1fr;
       }
 
+      .landing-clientes { grid-template-columns: 1fr; }
+
       .numeros {
         gap: 12px;
       }
@@ -622,6 +624,11 @@
           <a class="landing-cliente" href="https://gadielma.github.io/jeszell/" target="_blank" rel="noopener">
             <div class="icono">✦</div>
             <h3>Jeszell</h3>
+            <span data-i18n="landingClientLink">Ver landing page →</span>
+          </a>
+          <a class="landing-cliente" href="/soypobre/">
+            <div class="icono">✧</div>
+            <h3>SoyPobre</h3>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
         </div>
