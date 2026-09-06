@@ -309,6 +309,44 @@
     .landing-cliente h3 { margin-bottom: 8px; }
     .landing-cliente span { color: #39845e; font-weight: 700; }
 
+    /* Cada producto tiene una pequeña pieza visual propia, no un ícono genérico. */
+    .producto-biblia {
+      position: relative;
+      overflow: hidden;
+      border-color: #b08a55;
+      background:
+        linear-gradient(135deg, rgba(255,252,244,.96), rgba(239,220,191,.76)),
+        repeating-linear-gradient(90deg, rgba(126,84,41,.08) 0 1px, transparent 1px 17px);
+      color: #4a3525;
+    }
+    .producto-biblia::after {
+      position: absolute; right: -17px; bottom: -27px; width: 142px; height: 162px;
+      border: 1px solid #bd9260; border-radius: 5px 16px 16px 5px;
+      background: linear-gradient(110deg, #c49662, #f5e4c8 10% 92%, #b17c46);
+      box-shadow: -9px 9px 0 #d7b788; content: ""; transform: rotate(-11deg);
+    }
+    .producto-biblia h3 { position: relative; z-index: 1; margin-top: 28px; color: #5a3d26; font-family: Georgia, serif; font-size: 1.5rem; }
+    .producto-biblia p, .producto-biblia .producto-link { position: relative; z-index: 1; max-width: 76%; }
+    .producto-biblia .producto-link { color: #80501e; }
+    .biblia-marca { position: relative; z-index: 1; display: flex; align-items: center; gap: 10px; color: #9a6f35; }
+    .biblia-marca span { font: 2.4rem/1 Georgia, serif; }
+    .biblia-marca small { font: 700 .58rem/1.2 Georgia, serif; letter-spacing: .12em; }
+
+    .landing-cliente { position: relative; overflow: hidden; min-height: 300px; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
+    .landing-cliente:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .landing-marca { display: flex; align-items: center; justify-content: center; gap: 12px; height: 130px; margin: -26px -26px 24px; }
+    .landing-marca b { display: grid; width: 64px; height: 64px; place-items: center; border-radius: 50%; font-size: 2rem; }
+    .landing-marca small { font-size: .62rem; font-weight: 700; letter-spacing: .14em; }
+    .landing-jeszell { border-color: #b9d8c4; background: #fdfdfb; color: #183331; }
+    .jeszell-marca { background: linear-gradient(135deg, #f4f0e7, #dbe8e4); }
+    .jeszell-marca b { border: 1px solid #92aaa3; background: #fff; color: #667c7b; font-family: Georgia, serif; font-weight: 400; }
+    .jeszell-marca small { color: #667c7b; }
+    .landing-soypobre { border-color: #6b5142; background: #f4f1ee; color: #171717; }
+    .soypobre-marca { background: radial-gradient(circle at 80% 25%, #d8ff6b 0 5%, transparent 28%), linear-gradient(135deg, #f5f2ef, #ded3cd); }
+    .soypobre-marca b { border-radius: 19px; background: #65483a; color: #4e9b55; font-family: Arial, sans-serif; font-weight: 800; }
+    .soypobre-marca small { color: #65483a; }
+    .landing-soypobre span { color: #315f45; }
+
     .nosotros {
       color: white;
       background: var(--azul);
@@ -596,7 +634,7 @@
           </a>
 
           <a class="tarjeta producto producto-biblia" href="/biblia/">
-            <div class="icono">✧</div>
+            <div class="biblia-marca"><span>✧</span><small>TEXTOS · HISTORIA · ARCHIVO</small></div>
             <h3>Biblia Apócrifa</h3>
             <p data-i18n="bibleProductText">Una biblioteca digital para descubrir textos apócrifos, documentos históricos y obras de consulta.</p>
             <span class="producto-link" data-i18n="bibleProductLink">Abrir la biblioteca →</span>
@@ -621,13 +659,13 @@
           <p class="texto-suave" data-i18n="landingText">Diseñamos experiencias digitales a medida para que cada marca tenga un lugar propio en internet.</p>
         </div>
         <div class="landing-clientes">
-          <a class="landing-cliente" href="https://gadielma.github.io/jeszell/" target="_blank" rel="noopener">
-            <div class="icono">✦</div>
+          <a class="landing-cliente landing-jeszell" href="https://gadielma.github.io/jeszell/" target="_blank" rel="noopener">
+            <div class="landing-marca jeszell-marca"><b>J</b><small>ESTÉTICA &amp; PILATES</small></div>
             <h3>Jeszell</h3>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
-          <a class="landing-cliente" href="/soypobre/">
-            <div class="icono">✧</div>
+          <a class="landing-cliente landing-soypobre" href="/soypobre/">
+            <div class="landing-marca soypobre-marca"><b>P</b><small>AYUDA DIRECTA</small></div>
             <h3>SoyPobre</h3>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
