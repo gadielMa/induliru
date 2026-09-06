@@ -331,9 +331,9 @@
     .biblia-marca span { font: 2.4rem/1 Georgia, serif; }
     .biblia-marca small { font: 700 .58rem/1.2 Georgia, serif; letter-spacing: .12em; }
 
-    .landing-cliente { position: relative; display: flex; min-height: 330px; flex-direction: column; overflow: hidden; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
+    .landing-cliente { position: relative; display: flex; flex-direction: column; overflow: hidden; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
     .landing-cliente:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .landing-collage { position: relative; height: 166px; margin: -26px -26px 22px; overflow: hidden; background: #e7eeeb; }
+    .landing-collage { position: relative; height: 184px; margin: -26px -26px 20px; overflow: hidden; background: #e7eeeb; }
     .landing-collage img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; }
     .landing-collage::after { position: absolute; inset: 0; content: ''; pointer-events: none; }
     .collage-sello { position: absolute; z-index: 1; top: 15px; left: 15px; padding: 7px 10px; font-size: .58rem; font-weight: 800; letter-spacing: .13em; }
@@ -343,12 +343,12 @@
     .jeszell-collage .collage-sello { color: #536d68; background: rgba(255,255,255,.84); }
     .jeszell-collage .collage-inicial { border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.86); color: #667c7b; font-family: Georgia, serif; font-weight: 400; }
     .landing-soypobre { border-color: #6b5142; background: #f4f1ee; color: #171717; }
-    .soypobre-collage::after { background: linear-gradient(90deg, rgba(31,25,20,.5), transparent 72%); }
+    .soypobre-collage::after { background: linear-gradient(100deg, rgba(25,22,19,.64), rgba(25,22,19,.08) 74%), radial-gradient(circle at 78% 22%, rgba(216,255,107,.68), transparent 21%); }
     .soypobre-collage .collage-sello { color: #f4f1ee; background: #171717; }
-    .soypobre-collage .collage-inicial { background: #65483a; color: #4e9b55; }
+    .soypobre-collage .collage-inicial { background: #65483a; box-shadow: 5px 5px 0 #d8ff6b; color: #4e9b55; }
     .landing-soypobre span { color: #315f45; }
     .landing-cliente > span { color: #39845e; }
-    .landing-cliente > span:last-child { margin-top: auto; }
+    .landing-cliente > span:last-child { margin-top: 4px; }
 
     .nosotros {
       color: white;
@@ -672,7 +672,7 @@
           </a>
           <a class="landing-cliente landing-soypobre" href="/soypobre/">
             <div class="landing-collage soypobre-collage">
-              <img src="soypobre-aid-collage.png" alt="Gesto de ayuda comunitaria" loading="lazy">
+              <img src="soypobre-ruta.png" alt="Un camino que necesita atención" loading="lazy">
               <b class="collage-sello">AYUDA DIRECTA</b><b class="collage-inicial">P</b>
             </div>
             <h3>SoyPobre</h3>

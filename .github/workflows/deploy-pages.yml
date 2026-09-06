@@ -45,7 +45,7 @@ jobs:
       - name: Prepare the complete site
         run: |
           mkdir -p public-site/turnos/brian public-site/turnos/antonella public-site/turnos/mirelle public-site/turnos/sardi public-site/turnos/miro public-site/turnos/admin
-          cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png data_fiscal.png CNAME manifest.webmanifest sw.js offline.html robots.txt sitemap.xml public/jeszell-collage.png public/soypobre-aid-collage.png public-site/
+          cp index.html LOGO.png INDULIRU_CRUZ.png WSP_LOGO.png INSTA_LOGO.png GMAIL_LOGO.png MAPS_LOGO.png MERCADO_PAGO_LOGO.png data_fiscal.png CNAME manifest.webmanifest sw.js offline.html robots.txt sitemap.xml public/jeszell-collage.png public/soypobre-ruta.png public-site/
           cp -R icons public-site/icons
           rsync -a soypobre-source/ public-site/soypobre/
           cp -R dist/* public-site/turnos/
