@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pago confirmado · BrianBarber</title>
+    <style>
+      :root { font-family: Arial, Helvetica, sans-serif; color: #1b2822; background: #f5f7f3; }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      .page { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+      .card { width: min(100%, 680px); padding: clamp(28px, 6vw, 56px); border: 1px solid #cfe2d7; border-radius: 20px; background: #fffdf9; box-shadow: 0 18px 52px rgba(33, 75, 66, .12); text-align: center; }
+      .check { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 24px; border-radius: 50%; background: #e2f1e9; color: #1d7151; font-size: 2.4rem; font-weight: 800; }
+      .eyebrow { color: #33705b; font-size: .76rem; font-weight: 800; letter-spacing: .15em; }
+      h1 { margin: 12px 0; font-size: clamp(2rem, 7vw, 3.7rem); letter-spacing: -.06em; line-height: .96; }
+      p { max-width: 460px; margin: 0 auto; color: #66736d; font-size: 1.05rem; line-height: 1.55; }
+      .detail { margin: 28px 0; padding: 18px; border-radius: 12px; background: #f2f7f4; color: #315b4b; font-size: .95rem; font-weight: 700; }
+      .whatsapp { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: min(100%, 390px); padding: 16px 22px; border-radius: 999px; background: #25d366; color: white; font-size: 1rem; font-weight: 800; text-decoration: none; box-shadow: 0 9px 20px rgba(37, 211, 102, .25); }
+      .whatsapp img { width: 23px; height: 23px; object-fit: contain; filter: brightness(0) invert(1); }
+      .small { display: block; margin-top: 18px; color: #79847e; font-size: .82rem; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <div class="check">✓</div>
+        <span class="eyebrow">BRIANBARBER</span>
+        <h1>¡Pago confirmado!</h1>
+        <p>Tu pago fue recibido. Brian recibirá la confirmación de tu turno.</p>
+        <div class="detail">Reserva: lunes 24 de agosto de 2026 a las 14:00 hs<br>Operación: 123456789</div>
+        <a class="whatsapp" href="https://wa.me/5491154907428?text=Hola%2C%20acabo%20de%20pagar%20una%20reserva%20para%20el%2024%20de%20agosto%20de%202026%20a%20las%2014%3A00%20hs.%20N%C3%BAmero%20de%20pago%3A%20123456789." target="_blank" rel="noreferrer">
+          <img src="WSP_LOGO.png" alt="">Avisar por WhatsApp ↗
+        </a>
+        <small class="small">El mensaje se abre listo para enviar.</small>
+      </section>
+    </main>
+  </body>
+</html>

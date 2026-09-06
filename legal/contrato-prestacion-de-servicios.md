@@ -15,7 +15,7 @@ El sitio incluirá únicamente las funcionalidades, páginas, servicios, conteni
 
 ## 2. Precio y vigencia
 
-El precio total es de **$40.000 ARS** (pesos cuarenta mil argentinos), pagadero de la siguiente manera: [pago único / detalle].
+El precio total es de **$50.000 ARS** (pesos cuarenta mil argentinos), pagadero de la siguiente manera: [pago único / detalle].
 
 La vigencia de funcionamiento incluida será de **un (1) año** desde la publicación o activación del sitio. La renovación posterior y todo servicio adicional se cotizarán por separado.
 

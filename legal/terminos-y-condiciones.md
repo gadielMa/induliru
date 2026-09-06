@@ -22,7 +22,7 @@ El Cliente deberá entregar información, textos, imágenes, datos de contacto, 
 
 ## 3. Precio, vigencia y pago
 
-Salvo propuesta particular distinta, el servicio de sitio web tiene un precio de **pesos cuarenta mil argentinos ($40.000 ARS)**, pago único, e incluye una vigencia de funcionamiento de **un (1) año** contado desde su publicación o activación.
+Salvo propuesta particular distinta, el servicio de sitio web tiene un precio de **pesos cincuenta mil argentinos ($50.000 ARS)**, pago único, e incluye una vigencia de funcionamiento de **un (1) año** contado desde su publicación o activación.
 
 La vigencia comprende únicamente los conceptos expresamente incluidos en la propuesta. Las renovaciones, modificaciones posteriores, servicios de terceros o desarrollos adicionales podrán cotizarse por separado.
 
