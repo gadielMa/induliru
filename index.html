@@ -347,6 +347,15 @@
     .soypobre-marca small { color: #65483a; }
     .landing-soypobre span { color: #315f45; }
 
+    .landing-cliente { display: flex; min-height: 350px; flex-direction: column; }
+    .landing-cliente > span { color: #39845e; }
+    .landing-descripcion { max-width: 310px; margin: 5px 0 16px; color: #60706c; font-size: .94rem; line-height: 1.42; }
+    .landing-etiquetas { display: flex; gap: 7px; margin: 0 0 22px; }
+    .landing-etiquetas i { padding: 5px 8px; border: 1px solid currentColor; border-radius: 999px; color: #667c7b; font-size: .65rem; font-style: normal; font-weight: 700; }
+    .landing-cliente > span:last-child { margin-top: auto; }
+    .landing-soypobre .landing-descripcion { color: #665c56; }
+    .landing-soypobre .landing-etiquetas i { color: #65483a; }
+
     .nosotros {
       color: white;
       background: var(--azul);
@@ -662,11 +671,15 @@
           <a class="landing-cliente landing-jeszell" href="https://gadielma.github.io/jeszell/" target="_blank" rel="noopener">
             <div class="landing-marca jeszell-marca"><b>J</b><small>ESTÉTICA &amp; PILATES</small></div>
             <h3>Jeszell</h3>
+            <p class="landing-descripcion">Estética, pilates y bienestar en una experiencia de reserva cálida y personal.</p>
+            <div class="landing-etiquetas"><i>Bienestar</i><i>Reservas online</i></div>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
           <a class="landing-cliente landing-soypobre" href="/soypobre/">
             <div class="landing-marca soypobre-marca"><b>P</b><small>AYUDA DIRECTA</small></div>
             <h3>SoyPobre</h3>
+            <p class="landing-descripcion">Conecta a quienes necesitan ayuda con quienes quieren transferir de forma directa.</p>
+            <div class="landing-etiquetas"><i>Impacto real</i><i>Comunidad</i></div>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
         </div>
