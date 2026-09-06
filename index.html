@@ -305,7 +305,6 @@
     .landing-pages .encabezado-seccion { margin-bottom: 34px; }
     .landing-clientes { display: grid; grid-template-columns: repeat(2, minmax(0, 360px)); gap: 20px; }
     .landing-cliente { display: block; padding: 26px; background: var(--blanco); border: 1px solid #b9d8c4; border-radius: 22px; }
-    .landing-cliente img { display: block; width: 100%; height: 170px; object-fit: contain; background: #fff; margin-bottom: 18px; }
     .landing-cliente h3 { margin-bottom: 8px; }
     .landing-cliente span { color: #39845e; font-weight: 700; }
 
@@ -332,29 +331,24 @@
     .biblia-marca span { font: 2.4rem/1 Georgia, serif; }
     .biblia-marca small { font: 700 .58rem/1.2 Georgia, serif; letter-spacing: .12em; }
 
-    .landing-cliente { position: relative; overflow: hidden; min-height: 300px; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
+    .landing-cliente { position: relative; display: flex; min-height: 330px; flex-direction: column; overflow: hidden; text-decoration: none; transition: transform .25s ease, box-shadow .25s ease; }
     .landing-cliente:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .landing-marca { display: flex; align-items: center; justify-content: center; gap: 12px; height: 130px; margin: -26px -26px 24px; }
-    .landing-marca b { display: grid; width: 64px; height: 64px; place-items: center; border-radius: 50%; font-size: 2rem; }
-    .landing-marca small { font-size: .62rem; font-weight: 700; letter-spacing: .14em; }
+    .landing-collage { position: relative; height: 166px; margin: -26px -26px 22px; overflow: hidden; background: #e7eeeb; }
+    .landing-collage img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; }
+    .landing-collage::after { position: absolute; inset: 0; content: ''; pointer-events: none; }
+    .collage-sello { position: absolute; z-index: 1; top: 15px; left: 15px; padding: 7px 10px; font-size: .58rem; font-weight: 800; letter-spacing: .13em; }
+    .collage-inicial { position: absolute; z-index: 1; right: 15px; bottom: 14px; display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; font-size: 1.25rem; font-weight: 700; }
     .landing-jeszell { border-color: #b9d8c4; background: #fdfdfb; color: #183331; }
-    .jeszell-marca { background: linear-gradient(135deg, #f4f0e7, #dbe8e4); }
-    .jeszell-marca b { border: 1px solid #92aaa3; background: #fff; color: #667c7b; font-family: Georgia, serif; font-weight: 400; }
-    .jeszell-marca small { color: #667c7b; }
+    .jeszell-collage::after { background: linear-gradient(90deg, rgba(244,240,231,.94), rgba(244,240,231,.18) 68%); }
+    .jeszell-collage .collage-sello { color: #536d68; background: rgba(255,255,255,.84); }
+    .jeszell-collage .collage-inicial { border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.86); color: #667c7b; font-family: Georgia, serif; font-weight: 400; }
     .landing-soypobre { border-color: #6b5142; background: #f4f1ee; color: #171717; }
-    .soypobre-marca { background: radial-gradient(circle at 80% 25%, #d8ff6b 0 5%, transparent 28%), linear-gradient(135deg, #f5f2ef, #ded3cd); }
-    .soypobre-marca b { border-radius: 19px; background: #65483a; color: #4e9b55; font-family: Arial, sans-serif; font-weight: 800; }
-    .soypobre-marca small { color: #65483a; }
+    .soypobre-collage::after { background: linear-gradient(90deg, rgba(31,25,20,.5), transparent 72%); }
+    .soypobre-collage .collage-sello { color: #f4f1ee; background: #171717; }
+    .soypobre-collage .collage-inicial { background: #65483a; color: #4e9b55; }
     .landing-soypobre span { color: #315f45; }
-
-    .landing-cliente { display: flex; min-height: 350px; flex-direction: column; }
     .landing-cliente > span { color: #39845e; }
-    .landing-descripcion { max-width: 310px; margin: 5px 0 16px; color: #60706c; font-size: .94rem; line-height: 1.42; }
-    .landing-etiquetas { display: flex; gap: 7px; margin: 0 0 22px; }
-    .landing-etiquetas i { padding: 5px 8px; border: 1px solid currentColor; border-radius: 999px; color: #667c7b; font-size: .65rem; font-style: normal; font-weight: 700; }
     .landing-cliente > span:last-child { margin-top: auto; }
-    .landing-soypobre .landing-descripcion { color: #665c56; }
-    .landing-soypobre .landing-etiquetas i { color: #65483a; }
 
     .nosotros {
       color: white;
@@ -669,17 +663,19 @@
         </div>
         <div class="landing-clientes">
           <a class="landing-cliente landing-jeszell" href="https://gadielma.github.io/jeszell/" target="_blank" rel="noopener">
-            <div class="landing-marca jeszell-marca"><b>J</b><small>ESTÉTICA &amp; PILATES</small></div>
+            <div class="landing-collage jeszell-collage">
+              <img src="https://gadielma.github.io/jeszell/jeszell-beauty-banner.png" alt="Detalle de estética Jeszell" loading="lazy">
+              <b class="collage-sello">ESTÉTICA &amp; PILATES</b><b class="collage-inicial">J</b>
+            </div>
             <h3>Jeszell</h3>
-            <p class="landing-descripcion">Estética, pilates y bienestar en una experiencia de reserva cálida y personal.</p>
-            <div class="landing-etiquetas"><i>Bienestar</i><i>Reservas online</i></div>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
           <a class="landing-cliente landing-soypobre" href="/soypobre/">
-            <div class="landing-marca soypobre-marca"><b>P</b><small>AYUDA DIRECTA</small></div>
+            <div class="landing-collage soypobre-collage">
+              <img src="/soypobre-aid-collage.png" alt="Gesto de ayuda comunitaria" loading="lazy">
+              <b class="collage-sello">AYUDA DIRECTA</b><b class="collage-inicial">P</b>
+            </div>
             <h3>SoyPobre</h3>
-            <p class="landing-descripcion">Conecta a quienes necesitan ayuda con quienes quieren transferir de forma directa.</p>
-            <div class="landing-etiquetas"><i>Impacto real</i><i>Comunidad</i></div>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
         </div>
