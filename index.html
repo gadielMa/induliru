@@ -347,6 +347,11 @@
     .soypobre-collage .collage-sello { color: #f4f1ee; background: #171717; }
     .soypobre-collage .collage-inicial { background: #65483a; box-shadow: 5px 5px 0 #d8ff6b; color: #4e9b55; }
     .landing-soypobre span { color: #315f45; }
+    .landing-outdoor { border-color: #6f947f; background: #f2f5f0; color: #17352c; }
+    .outdoor-collage::after { background: linear-gradient(90deg, rgba(9,35,29,.68), rgba(9,35,29,.1) 76%), linear-gradient(0deg, rgba(9,35,29,.24), transparent 48%); }
+    .outdoor-collage .collage-sello { color: #f4f3e8; background: rgba(14,49,39,.82); }
+    .outdoor-collage .collage-inicial { border: 1px solid rgba(244,243,232,.72); background: rgba(244,243,232,.9); color: #17352c; }
+    .landing-outdoor span { color: #286047; }
     .landing-cliente > span { color: #39845e; }
     .landing-cliente > span:last-child { margin-top: 4px; }
 
@@ -678,6 +683,14 @@
             <h3>SoyPobre</h3>
             <span data-i18n="landingClientLink">Ver landing page →</span>
           </a>
+          <a class="landing-cliente landing-outdoor" href="https://proyectos-outdoor.com.ar/" target="_blank" rel="noopener">
+            <div class="landing-collage outdoor-collage">
+              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Montañas de la Patagonia" loading="lazy">
+              <b class="collage-sello" data-i18n="outdoorMark">PATAGONIA · AVENTURA</b><b class="collage-inicial">P</b>
+            </div>
+            <h3>Proyectos Outdoor</h3>
+            <span data-i18n="landingClientLink">Ver landing page →</span>
+          </a>
         </div>
       </div>
     </section>
@@ -801,7 +814,7 @@
         bookingProductText: 'Uma página profissional para que seus clientes escolham o serviço, o horário e paguem a reserva pelo celular.', bookingProductLink: 'Conhecer a plataforma →',
         bibleMark: 'TEXTOS · HISTÓRIA · ARQUIVO', bibleProductText: 'Uma biblioteca digital para descobrir textos apócrifos, documentos históricos e obras de consulta.', bibleProductLink: 'Abrir a biblioteca →',
         turnosProductTitle: 'Web para Agendamentos', websitesProductTitle: 'Websites', websitesProductText: 'Páginas web profissionais para marcas que querem uma identidade própria e uma presença digital memorável.', websitesProductLink: 'Ver clientes →',
-        landingTag: 'Clientes de páginas web', landingTitle: 'Landing pages com identidade própria.', landingText: 'Criamos experiências digitais sob medida para que cada marca tenha seu próprio espaço na internet.', landingClientLink: 'Ver página →', jeszellMark: 'ESTÉTICA E PILATES', soypobreMark: 'AJUDA DIRETA',
+        landingTag: 'Clientes de páginas web', landingTitle: 'Landing pages com identidade própria.', landingText: 'Criamos experiências digitais sob medida para que cada marca tenha seu próprio espaço na internet.', landingClientLink: 'Ver página →', jeszellMark: 'ESTÉTICA E PILATES', soypobreMark: 'AJUDA DIRETA', outdoorMark: 'PATAGÔNIA · AVENTURA',
         aboutTag: 'SOBRE A INDULIRU', aboutTitle: 'O futuro se constrói em equipe.',
         aboutTextOne: 'Somos uma marca que acredita no poder das boas perguntas, do trabalho colaborativo e das soluções que deixam uma marca positiva.',
         aboutTextTwo: 'Nossa abordagem combina visão estratégica, sensibilidade humana e execução rigorosa. Assim, as ideias não apenas parecem boas: elas funcionam.',
