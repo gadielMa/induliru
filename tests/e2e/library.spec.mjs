@@ -36,6 +36,23 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
+test('catalog dates shift from green near 33 CE to redder hues farther away', async ({ page }) => {
+  await page.goto('/biblia/');
+  await expect(page.getByText('Proximidad temporal al año 33 d. C.', { exact: false })).toBeVisible();
+  await expect(page.getByText(/la cercanía por sí sola no demuestra la fidelidad ni la autenticidad/i)).toBeVisible();
+  const nearDate = page.locator('#tbody .fecha-proximity').filter({ hasText: '~95–100 d.C.' }).first();
+  const distantDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo IV d.C.' }).first();
+  const ancientDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo X–VI a.C.' }).first();
+  await expect(nearDate).toBeVisible();
+  await expect(distantDate).toBeVisible();
+  await expect(ancientDate).toBeVisible();
+  const nearHue = await nearDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
+  const distantHue = await distantDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
+  const ancientHue = await ancientDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
+  expect(nearHue).toBeGreaterThan(distantHue);
+  expect(distantHue).toBeGreaterThan(ancientHue);
+});
+
 test('the Shroud image card fits mobile and desktop without horizontal overflow', async ({ page }) => {
   for (const viewport of [{ width: 390, height: 844, columns: 1 }, { width: 1440, height: 900, columns: 3 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
