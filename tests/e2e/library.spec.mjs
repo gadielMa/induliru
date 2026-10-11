@@ -86,6 +86,26 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
       await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
     }
   }
+  await page.getByRole('button', { name: /Jesús sana al ciego/ }).click();
+  const blind = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Jesús sana al ciego' }) });
+  await expect(blind).toBeVisible();
+  await expect(blind.locator('.timeline-image')).toHaveAttribute('src', 'assets/linea-tiempo/jesus-sana-ciego.png');
+  await blind.getByRole('button', { name: /Señales de restauración/ }).click();
+  await expect(page.locator('#prophecies-view')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Señales de restauración' })).toBeVisible();
+});
+
+test('Jesus resurrection links to the Shroud and Mary references identify Mary Magdalene', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#linea-de-tiempo');
+  const resurrection = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Resurrección de Jesús' }) });
+  await resurrection.getByRole('button', { name: /Qué dicen los Evangelios/ }).click();
+  await expect(page.locator('#shroud-view')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Qué dicen los Evangelios' })).toBeVisible();
+  await page.getByRole('button', { name: 'Secciones · Sábana Santa' }).click();
+  await page.getByRole('button', { name: 'Gnosticismo' }).click();
+  await expect(page.getByRole('heading', { name: /Evangelio de María Magdalena · BG 8502, pp\. 7–10/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Evangelio de María Magdalena · BG 8502, pp\. 15–19/ })).toBeVisible();
 });
 
 test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
