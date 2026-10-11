@@ -110,6 +110,35 @@ test('timeline adds the Annunciation, Mary manuscript links, and Revelation fina
   await expect(page.getByRole('heading', { name: 'El Elegido y el Hijo del Hombre' })).toBeVisible();
 });
 
+test('Ascendidos distingue las tradiciones y enlaza la roca y el reino con sus secciones', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#ascendidos');
+  const ascended = page.locator('#ascended-view');
+  await expect(ascended).toBeVisible();
+  for (const title of ['Enoc', 'Elías', 'Jesús', 'María, madre de Jesús']) {
+    const card = ascended.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: title, exact: true }) });
+    await expect(card).toBeVisible();
+    await expect(card.locator('img')).toHaveCount(1);
+  }
+  await expect(ascended).toContainText('no afirma que fuera una ascensión corporal');
+  await expect(ascended).toContainText('no un episodio narrado en la Biblia');
+
+  await ascended.getByRole('button', { name: /Elías es llevado en un carro de fuego/ }).click();
+  await expect(page.locator('#timeline-view')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Elías es llevado en un carro de fuego' })).toBeVisible();
+  await page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La Roca de Moisés' }) })
+    .getByRole('button', { name: /La Roca de Moisés/ }).click();
+  await expect(page.locator('#objects-view')).toBeVisible();
+  await expect(page.locator('#objects-view').getByRole('heading', { name: 'La Roca de Moisés' })).toBeVisible();
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="timeline"]').click();
+  await page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La división del reino' }) })
+    .getByRole('button', { name: /Roboam y Jeroboam/ }).click();
+  await expect(page.locator('#kingdoms-view')).toBeVisible();
+  await expect(page.locator('#kingdoms-view').getByRole('heading', { name: 'Roboam y Jeroboam' })).toBeVisible();
+});
+
 test('extinct animals and lost places are separate views and their images load', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#animales-extintos');
