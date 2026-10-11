@@ -36,21 +36,31 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
-test('catalog dates shift from green near 33 CE to redder hues farther away', async ({ page }) => {
+test('catalog dates use a centered green-to-red chronology and sort chronologically', async ({ page }) => {
   await page.goto('/biblia/');
   await expect(page.getByText('Proximidad temporal al año 33 d. C.', { exact: false })).toBeVisible();
-  await expect(page.getByText(/la cercanía por sí sola no demuestra la fidelidad ni la autenticidad/i)).toBeVisible();
+  await expect(page.getByText(/no demuestra por sí sola la fidelidad ni la autenticidad/i)).toBeVisible();
   const nearDate = page.locator('#tbody .fecha-proximity').filter({ hasText: '~95–100 d.C.' }).first();
   const distantDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo IV d.C.' }).first();
   const ancientDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo X–VI a.C.' }).first();
-  await expect(nearDate).toBeVisible();
-  await expect(distantDate).toBeVisible();
-  await expect(ancientDate).toBeVisible();
   const nearHue = await nearDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
   const distantHue = await distantDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
   const ancientHue = await ancientDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
+  expect(ancientHue).toBe(nearHue);
+  expect(nearHue).toBe(132);
   expect(nearHue).toBeGreaterThan(distantHue);
-  expect(distantHue).toBeGreaterThan(ancientHue);
+  const pillTextAlign = await nearDate.evaluate(element => getComputedStyle(element).textAlign);
+  expect(pillTextAlign).toBe('center');
+
+  const dateHeader = page.locator('th[data-col="Fecha aproximada"]');
+  await dateHeader.evaluate(element => element.scrollIntoView({ block: 'nearest', inline: 'center' }));
+  await dateHeader.click();
+  const ascendingDates = await page.locator('#tbody .fecha-proximity').allTextContents();
+  expect(ascendingDates.indexOf('~100 a.C.')).toBeLessThan(ascendingDates.indexOf('~48–55 d.C.'));
+  expect(ascendingDates.indexOf('~48–55 d.C.')).toBeLessThan(ascendingDates.indexOf('~150 d.C.'));
+  await dateHeader.click();
+  const descendingDates = await page.locator('#tbody .fecha-proximity').allTextContents();
+  expect(descendingDates.indexOf('~150 d.C.')).toBeLessThan(descendingDates.indexOf('~48–55 d.C.'));
 });
 
 test('the Shroud image card fits mobile and desktop without horizontal overflow', async ({ page }) => {
