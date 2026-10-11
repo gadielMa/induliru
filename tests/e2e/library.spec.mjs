@@ -162,6 +162,8 @@ test('Israel and Judah banner and unified Seol/Hades references display correctl
   const tartarus = afterlife.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'El Tártaro / Segundo Cielo' }) });
   await expect(tartarus).toContainText('2 Pedro 2:4');
   await expect(tartarus).toContainText(/segundo cielo y el Tártaro sean el mismo lugar/i);
+  await expect(tartarus.locator('img')).toHaveCount(1);
+  await expect(tartarus.locator('img')).toHaveAttribute('src', 'assets/mas-alla/segundo-cielo.png');
 
   await page.locator('#view-menu-toggle').click();
   await page.locator('.view-tab[data-view="gnosticism"]').click();
