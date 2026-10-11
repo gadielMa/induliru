@@ -28,6 +28,14 @@ test('the section menu responds to scrolling at mobile and desktop widths', asyn
   await expect.poll(() => toggle.evaluate(element => element.getBoundingClientRect().width)).toBeLessThan(desktopWideWidth * 0.7);
 });
 
+test('direct index.html links are cleaned to the short Bible URL without losing the fragment', async ({ page }) => {
+  await page.goto('/biblia/index.html#linea-de-tiempo');
+  await expect(page).toHaveURL(/\/biblia\/#linea-de-tiempo$/);
+  await expect(page.locator('#timeline-view')).toBeVisible();
+  await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=1');
+  await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
+});
+
 test('the Shroud image card fits mobile and desktop without horizontal overflow', async ({ page }) => {
   for (const viewport of [{ width: 390, height: 844, columns: 1 }, { width: 1440, height: 900, columns: 3 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
