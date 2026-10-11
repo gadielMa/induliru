@@ -130,6 +130,19 @@ test('extinct animals and lost places are separate views and their images load',
   await expect.poll(() => azazel.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
 });
 
+test('every passage card in Gnostic traditions has a loaded illustration', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#gnosticismo');
+  const cards = page.locator('#gnosticism-view .gnostic-passages > .enoch-passage');
+  await expect(cards).toHaveCount(13);
+  for (const card of await cards.all()) {
+    const image = card.locator('img');
+    await expect(image).toHaveCount(1);
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+});
+
 test('John 20 proceeds to John 21 and the last chapter proceeds to Acts 1', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=20');
