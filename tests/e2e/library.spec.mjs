@@ -69,6 +69,17 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await isaiah.getByRole('button', { name: /Emanuel y el heredero de David/ }).click();
   await expect(page.locator('#prophecies-view')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Emanuel y el heredero de David' })).toBeVisible();
+  for (const [title, imageCount] of [
+    ['El rey ungido y el Señor de David', 1],
+    ['Señales de restauración', 2]
+  ]) {
+    const card = page.locator('.prophecy-card').filter({ has: page.getByRole('heading', { name: title }) });
+    const images = card.locator('.prophecy-card-image');
+    await expect(images).toHaveCount(imageCount);
+    for (const image of await images.all()) {
+      await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+    }
+  }
 });
 
 test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
