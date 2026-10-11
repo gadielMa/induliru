@@ -48,6 +48,62 @@ test('searching Gadiel opens Gaddiel in Numbers 13:11', async ({ page }) => {
   await expect(page.locator('#capitulo-13 .passage').filter({ hasText: 'Gaddiel hijo de Sodi' })).toBeVisible();
 });
 
+test('timeline illustrations load and Isaiah links to Prophecies', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#linea-de-tiempo');
+  for (const title of [
+    'La caída y la expulsión del Edén',
+    'Las diez plagas de Egipto',
+    'Sansón',
+    'Elías es llevado en un carro de fuego',
+    'Isaías y Emanuel',
+    'Daniel en el foso de los leones'
+  ]) {
+    const card = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title }) });
+    const image = card.locator('.timeline-image');
+    await expect(image).toBeVisible();
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+  const isaiah = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Isaías y Emanuel' }) });
+  await isaiah.getByRole('button', { name: /Emanuel y el heredero de David/ }).click();
+  await expect(page.locator('#prophecies-view')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Emanuel y el heredero de David' })).toBeVisible();
+  for (const [title, imageCount] of [
+    ['El rey ungido y el Señor de David', 1],
+    ['Señales de restauración', 2]
+  ]) {
+    const card = page.locator('.prophecy-card').filter({ has: page.getByRole('heading', { name: title }) });
+    const images = card.locator('.prophecy-card-image');
+    await expect(images).toHaveCount(imageCount);
+    for (const image of await images.all()) {
+      await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+    }
+  }
+});
+
+test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#linea-de-tiempo');
+  for (const [title, ref] of [
+    ['La anunciación a María', 'assets/timeline/anunciacion-maria.jpg'],
+    ['El jinete del caballo blanco', 'assets/timeline/jinete-caballo-blanco.jpg']
+  ]) {
+    const card = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title }) });
+    const image = card.locator('.timeline-image');
+    await expect(image).toHaveAttribute('src', ref);
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+  const finale = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Juicio final y nueva creación' }) });
+  await expect(finale).toBeVisible();
+  await expect(finale).toContainText('Apocalipsis 20:11–15 · 21:1–5');
+  const annunciation = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La anunciación a María' }) });
+  await annunciation.getByRole('button', { name: /El Elegido y el Hijo del Hombre/ }).click();
+  await expect(page.locator('#prophecies-view')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'El Elegido y el Hijo del Hombre' })).toBeVisible();
+});
+
 test('John 20 proceeds to John 21 and the last chapter proceeds to Acts 1', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=20');
