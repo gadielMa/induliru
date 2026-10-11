@@ -143,6 +143,33 @@ test('every passage card in Gnostic traditions has a loaded illustration', async
   }
 });
 
+test('Israel and Judah banner and unified Seol/Hades references display correctly', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#israel-y-juda');
+  const banner = page.locator('#kingdoms-view .kingdoms-banner img');
+  await expect(banner).toBeVisible();
+  await expect.poll(() => banner.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="afterlife"]').click();
+  const afterlife = page.locator('#afterlife-view');
+  await expect(afterlife.locator('.extinct-card')).toHaveCount(5);
+  const seol = afterlife.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'Seol / Hades' }) });
+  await expect(seol).toBeVisible();
+  await expect(seol.locator('img')).toHaveAttribute('src', 'assets/mas-alla/seol-cueva.png');
+  await expect(seol).toContainText('Evangelio de Nicodemo · descenso al Hades');
+  await expect(afterlife).not.toContainText('¿Adónde van los muertos después de la victoria de Cristo?');
+  const tartarus = afterlife.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'El Tártaro / Segundo Cielo' }) });
+  await expect(tartarus).toContainText('2 Pedro 2:4');
+  await expect(tartarus).toContainText(/segundo cielo y el Tártaro sean el mismo lugar/i);
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="gnosticism"]').click();
+  const john17 = page.locator('#gnosticism-view .enoch-passage').filter({ has: page.getByRole('heading', { name: 'Juan 17:15–16' }) });
+  await expect(john17).toContainText('No ruego que los quites del mundo, sino que los guardes del mal. No son del mundo, como tampoco yo soy del mundo');
+  await expect(john17).not.toContainText('paráfrasis interpretativa');
+});
+
 test('John 20 proceeds to John 21 and the last chapter proceeds to Acts 1', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=20');
