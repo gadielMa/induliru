@@ -104,6 +104,32 @@ test('timeline adds the Annunciation, Mary manuscript links, and Revelation fina
   await expect(page.getByRole('heading', { name: 'El Elegido y el Hijo del Hombre' })).toBeVisible();
 });
 
+test('extinct animals and lost places are separate views and their images load', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/#animales-extintos');
+  await expect(page.locator('#extinct-view')).toBeVisible();
+  await expect(page.locator('#extinct-view')).toContainText('El uro (re’em)');
+  await expect(page.locator('#extinct-view')).not.toContainText('La ciudad de Enoc');
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="lostPlaces"]').click();
+  const lostPlaces = page.locator('#lost-places-view');
+  await expect(lostPlaces).toBeVisible();
+  for (const title of ['La ciudad de Enoc', 'Ofir', 'Nínive', 'Babilonia', 'Siquem']) {
+    const card = lostPlaces.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: title }) });
+    await expect(card).toBeVisible();
+    const image = card.locator('img');
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="enoch"]').click();
+  const azazel = page.locator('#enoch-view .enoch-passage').filter({ has: page.getByRole('heading', { name: 'Enoc 10:4' }) }).locator('img');
+  await expect(azazel).toBeVisible();
+  await expect.poll(() => azazel.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+});
+
 test('John 20 proceeds to John 21 and the last chapter proceeds to Acts 1', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=20');
