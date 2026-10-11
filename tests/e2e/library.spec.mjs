@@ -36,9 +36,9 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
-test('catalog dates use a centered green-to-red chronology and sort chronologically', async ({ page }) => {
+test('catalog dates use a centered composition-date gradient and sort chronologically', async ({ page }) => {
   await page.goto('/biblia/');
-  await expect(page.getByText('Proximidad temporal al año 33 d. C.', { exact: false })).toBeVisible();
+  await expect(page.getByText('Escala temporal de composición', { exact: false })).toBeVisible();
   await expect(page.getByText(/no demuestra por sí sola la fidelidad ni la autenticidad/i)).toBeVisible();
   const nearDate = page.locator('#tbody .fecha-proximity').filter({ hasText: '~95–100 d.C.' }).first();
   const distantDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo IV d.C.' }).first();
@@ -46,8 +46,8 @@ test('catalog dates use a centered green-to-red chronology and sort chronologica
   const nearHue = await nearDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
   const distantHue = await distantDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
   const ancientHue = await ancientDate.evaluate(element => Number.parseFloat(getComputedStyle(element).getPropertyValue('--date-hue')));
-  expect(ancientHue).toBe(nearHue);
-  expect(nearHue).toBe(132);
+  expect(ancientHue).toBe(132);
+  expect(ancientHue).toBeGreaterThan(nearHue);
   expect(nearHue).toBeGreaterThan(distantHue);
   const pillTextAlign = await nearDate.evaluate(element => getComputedStyle(element).textAlign);
   expect(pillTextAlign).toBe('center');
