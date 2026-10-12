@@ -130,6 +130,30 @@ test('all library images preserve their full source framing on mobile and deskto
   }
 });
 
+test('portrait timeline cards reserve their full width and never overlap adjacent events', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/biblia/');
+    await page.locator('#view-menu-toggle').click();
+    await page.locator('.view-tab[data-view="timeline"]').click();
+    await page.locator('#timeline-view .timeline-image').evaluateAll(images => {
+      images.forEach(image => { image.loading = 'eager'; });
+    });
+    await expect.poll(() => page.locator('#timeline-view .timeline-event.is-portrait').count()).toBeGreaterThan(0);
+
+    const layout = await page.locator('#timeline-view .timeline-event').evaluateAll(cards => cards.map(card => {
+      const rect = card.getBoundingClientRect();
+      const track = getComputedStyle(card.parentElement);
+      return { title: card.querySelector('h3')?.textContent, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: rect.width, minWidth: getComputedStyle(card).minWidth, autoColumns: track.gridAutoColumns, columns: track.gridTemplateColumns };
+    }));
+    const orderedLayout = [...layout].sort((first, second) => viewport.width <= 768 ? first.top - second.top : first.left - second.left);
+    for (let index = 1; index < orderedLayout.length; index++) {
+      if (viewport.width <= 768) expect(orderedLayout[index].top, `${orderedLayout[index - 1].title} / ${orderedLayout[index].title}`).toBeGreaterThanOrEqual(orderedLayout[index - 1].bottom - 1);
+      else expect(orderedLayout[index].left, `${orderedLayout[index - 1].title} (${orderedLayout[index - 1].width}px, ${orderedLayout[index - 1].autoColumns}) / ${orderedLayout[index].title} (${orderedLayout[index].width}px, ${orderedLayout[index].autoColumns})`).toBeGreaterThanOrEqual(orderedLayout[index - 1].right - 1);
+    }
+  }
+});
+
 test('mobile portrait art uses its natural height and the Tartarus citation is styled', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/biblia/');
