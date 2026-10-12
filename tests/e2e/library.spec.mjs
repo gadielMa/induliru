@@ -36,6 +36,22 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
+test('genealogy shows collateral sibling branches separately from the direct line', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/biblia/#arbol-genealogico');
+  const genealogy = page.locator('#genealogy-view');
+  await expect(genealogy).toBeVisible();
+  const branches = genealogy.locator('.genealogy-sibling-card');
+  await expect(branches).toHaveCount(6);
+  for (const heading of ['Caín, Abel y Set', 'Ismael e Isaac', 'Jacob y Esaú', 'Los hijos de Jacob y Dina', 'Moisés, Aarón y Miriam', 'Los hermanos y hermanas de Jesús']) {
+    await expect(branches.filter({ has: page.getByRole('heading', { name: heading }) })).toBeVisible();
+  }
+  await expect(branches.filter({ has: page.getByRole('heading', { name: 'Caín, Abel y Set' }) })).toContainText('la descendencia de Set');
+  await expect(branches.filter({ has: page.getByRole('heading', { name: 'Los hermanos y hermanas de Jesús' }) })).toContainText('difieren sobre el parentesco exacto');
+  const groups = genealogy.locator('.genealogy-sibling-groups');
+  expect(await groups.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+});
+
 test('catalog dates use a centered composition-date gradient and sort chronologically', async ({ page }) => {
   await page.goto('/biblia/');
   await expect(page.getByText('Escala temporal de composición', { exact: false })).toBeVisible();
