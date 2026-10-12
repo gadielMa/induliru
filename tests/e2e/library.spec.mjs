@@ -41,15 +41,33 @@ test('genealogy shows collateral sibling branches separately from the direct lin
   await page.goto('/biblia/#arbol-genealogico');
   const genealogy = page.locator('#genealogy-view');
   await expect(genealogy).toBeVisible();
-  const branches = genealogy.locator('.genealogy-sibling-card');
-  await expect(branches).toHaveCount(6);
-  for (const heading of ['Caín, Abel y Set', 'Ismael e Isaac', 'Jacob y Esaú', 'Los hijos de Jacob y Dina', 'Moisés, Aarón y Miriam', 'Los hermanos y hermanas de Jesús']) {
-    await expect(branches.filter({ has: page.getByRole('heading', { name: heading }) })).toBeVisible();
+  const siblingNodes = genealogy.locator('.tree-family-sibling');
+  await expect(siblingNodes).toHaveCount(8);
+  for (const name of ['Caín', 'Abel', 'Ismael', 'Esaú', 'Leví', 'José']) {
+    await expect(siblingNodes.filter({ hasText: new RegExp(`^${name}`) }).first()).toBeVisible();
   }
-  await expect(branches.filter({ has: page.getByRole('heading', { name: 'Caín, Abel y Set' }) })).toContainText('la descendencia de Set');
-  await expect(branches.filter({ has: page.getByRole('heading', { name: 'Los hermanos y hermanas de Jesús' }) })).toContainText('difieren sobre el parentesco exacto');
-  const groups = genealogy.locator('.genealogy-sibling-groups');
-  expect(await groups.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  const jacobBranch = genealogy.locator('.tree-jacob-children');
+  await expect(jacobBranch).toContainText('Otros hijos de Jacob · hermanos de Judá');
+  await expect(jacobBranch).toContainText('Rama de Leví');
+  expect(await jacobBranch.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+});
+
+test('Jacob’s siblings branch horizontally and maternal labels are explicit', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/biblia/#arbol-genealogico');
+  const tree = page.locator('.family-tree');
+  const jacob = tree.locator(':scope > .tree-node.tree-family-children').filter({ hasText: /^Jacob/ });
+  const siblings = jacob.locator('.tree-jacob-children');
+  await expect(siblings).toContainText('Otros hijos de Jacob · hermanos de Judá');
+  await expect(siblings.locator('.tree-other-sons-list').first().locator('span')).toHaveCount(10);
+  await expect(siblings.locator('.tree-mother-of').filter({ hasText: 'Lea' })).toContainText('Madre de:');
+  const jacobBox = await jacob.boundingBox();
+  const siblingsBox = await siblings.boundingBox();
+  expect(siblingsBox.x).toBeGreaterThan(jacobBox.x);
+  expect(Math.abs((siblingsBox.y + siblingsBox.height / 2) - (jacobBox.y + jacobBox.height / 2))).toBeLessThan(3);
+  await expect(jacob.locator('.tree-mother').first()).toHaveText('Madre: Rebeca');
+  await expect(tree.locator('.tree-node.tree-family-children').filter({ hasText: /^Judá/ }).locator('.tree-mother').first()).toHaveText('Madre: Lea');
+  await expect(tree.locator('.tree-node.tree-has-mother').filter({ hasText: /^Fares/ }).locator('.tree-mother')).toHaveText('Madre: Tamar');
 });
 
 test('catalog dates use a centered composition-date gradient and sort chronologically', async ({ page }) => {
