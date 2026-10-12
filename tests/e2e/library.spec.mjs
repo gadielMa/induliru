@@ -63,8 +63,8 @@ test('catalog dates use a centered composition-date gradient and sort chronologi
   expect(descendingDates.indexOf('~150 d.C.')).toBeLessThan(descendingDates.indexOf('~48–55 d.C.'));
 });
 
-test('the Shroud image card fits mobile and desktop without horizontal overflow', async ({ page }) => {
-  for (const viewport of [{ width: 390, height: 844, columns: 1 }, { width: 1440, height: 900, columns: 3 }]) {
+test('the Shroud section is one continuous body on mobile and desktop', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
     await page.goto('/biblia/');
     await page.locator('#view-menu-toggle').click();
@@ -72,9 +72,31 @@ test('the Shroud image card fits mobile and desktop without horizontal overflow'
     const figure = page.locator('.bilirubin-figure');
     await expect(figure).toBeVisible();
     await expect(figure.locator('img')).toHaveJSProperty('naturalWidth', 327);
-    const columns = await page.locator('#shroud-view .extinct-grid').evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
-    expect(columns).toBe(viewport.columns);
+    await expect(page.locator('#shroud-view > .library-single-body')).toHaveCount(1);
+    const gridDisplay = await page.locator('#shroud-view .extinct-grid').evaluate(element => getComputedStyle(element).display);
+    expect(gridDisplay).toBe('block');
+    const cardBorders = await page.locator('#shroud-view .extinct-card').evaluateAll(cards => cards.map(card => getComputedStyle(card).borderTopWidth));
+    expect(cardBorders.every(width => width === '0px')).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
+});
+
+test('Noah, Shroud, and Israel vs Judah each render as one body without nested card boxes', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/biblia/');
+  for (const [view, label, heading] of [
+    ['ark', 'Arca de Noé', 'El Arca de Noé'],
+    ['shroud', 'Sábana Santa', 'La Sábana Santa de Turín'],
+    ['kingdoms', 'Israel vs Judá', 'Israel vs Judá: el reino dividido']
+  ]) {
+    await page.locator('#view-menu-toggle').click();
+    await page.locator(`.view-tab[data-view="${view}"]`).click();
+    const section = page.locator(`#${view}-view`);
+    await expect(section.locator(':scope > .library-single-body')).toHaveCount(1);
+    await expect(section.getByRole('heading', { name: heading })).toBeVisible();
+    const cardBorders = await section.locator('.extinct-card').evaluateAll(cards => cards.map(card => getComputedStyle(card).borderTopWidth));
+    expect(cardBorders.every(width => width === '0px')).toBe(true);
+    if (view === 'kingdoms') await expect(page.locator('.view-tab[data-view="kingdoms"]')).toContainText(label);
   }
 });
 
@@ -88,8 +110,47 @@ test('all library images preserve their full source framing on mobile and deskto
       clip: getComputedStyle(image).clipPath
     })));
     expect(imagePolicies.length).toBeGreaterThan(20);
-    expect(imagePolicies.filter(image => image.fit !== 'contain' || image.clip !== 'none')).toEqual([]);
+    expect(imagePolicies.filter(image => (image.fit !== 'contain' && !image.src.includes('leon-asiatico')) || image.clip !== 'none')).toEqual([]);
   }
+});
+
+test('mobile portrait art uses its natural height and the Tartarus citation is styled', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/biblia/');
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="ascended"]').click();
+  const Moses = page.locator('#ascended-view .extinct-card').filter({ has: page.getByRole('heading', { name: 'Moisés' }) }).locator('.extinct-card-image');
+  await Moses.scrollIntoViewIfNeeded();
+  await expect.poll(() => Moses.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  const MosesDimensions = await Moses.evaluate(image => ({ width: image.getBoundingClientRect().width, height: image.getBoundingClientRect().height, naturalRatio: image.naturalWidth / image.naturalHeight }));
+  expect(MosesDimensions.width).toBeGreaterThan(300);
+  expect(MosesDimensions.height / MosesDimensions.width).toBeCloseTo(1 / MosesDimensions.naturalRatio, 1);
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="prophecies"]').click();
+  const prophecy = page.locator('#prophecies-view .prophecy-card').filter({ has: page.getByRole('heading', { name: 'Mirarán al que traspasaron' }) });
+  const prophecyImage = prophecy.locator('.prophecy-card-image');
+  await prophecyImage.scrollIntoViewIfNeeded();
+  await expect.poll(() => prophecyImage.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  const prophecyDimensions = await prophecyImage.evaluate(image => ({ width: image.getBoundingClientRect().width, height: image.getBoundingClientRect().height, naturalRatio: image.naturalWidth / image.naturalHeight }));
+  expect(prophecyDimensions.width).toBeGreaterThan(300);
+  expect(prophecyDimensions.height / prophecyDimensions.width).toBeCloseTo(1 / prophecyDimensions.naturalRatio, 1);
+  const pairedImages = page.locator('#prophecies-view .prophecy-image-pair .prophecy-card-image');
+  expect(await pairedImages.first().evaluate(image => getComputedStyle(image.parentElement).gridTemplateColumns.split(' ').length)).toBe(1);
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="afterlife"]').click();
+  const quotation = page.locator('#afterlife-view .extinct-card-body > blockquote');
+  await expect(quotation).toBeVisible();
+  expect(await quotation.evaluate(element => getComputedStyle(element).borderLeftWidth)).toBe('3px');
+
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="animals"]').click();
+  const lion = page.locator('#extinct-view .extinct-card').filter({ has: page.getByRole('heading', { name: 'León asiático' }) }).locator('.extinct-card-image');
+  await lion.scrollIntoViewIfNeeded();
+  const lionRatio = await lion.evaluate(image => image.getBoundingClientRect().width / image.getBoundingClientRect().height);
+  expect(lionRatio).toBeCloseTo(1.57, 1);
+  expect(await lion.evaluate(image => getComputedStyle(image).objectPosition)).toMatch(/0%$/);
 });
 
 test('searching Gadiel opens Gaddiel in Numbers 13:11', async ({ page }) => {
