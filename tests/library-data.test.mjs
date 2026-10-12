@@ -51,3 +51,14 @@ test('name search ignores accents and finds Gadiel/Gaddiel in Numbers 13:11', as
   const matches = findTextSearchMatches(index, 'Gadiel').filter(item => item.documentId === 'rvr1909-numeros');
   assert.ok(matches.some(item => item.chapter === 13 && item.verse === '11' && /Gaddiel hijo de Sodi/i.test(item.text)));
 });
+
+test('text search prioritizes Spanish matches before English while preserving their order', () => {
+  const index = [
+    { title: 'English first', language: 'en', text: 'Satan tempts' },
+    { title: 'Spanish first', language: 'es', text: 'Satanás tienta' },
+    { title: 'Spanish second', language: 'es', text: 'Satanás acusa' },
+    { title: 'English second', language: 'en', text: 'Satan accuses' }
+  ];
+  const matches = findTextSearchMatches(index, 'satan');
+  assert.deepEqual(matches.map(item => item.title), ['Spanish first', 'Spanish second', 'English first', 'English second']);
+});

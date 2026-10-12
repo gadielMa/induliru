@@ -78,6 +78,20 @@ test('the Shroud image card fits mobile and desktop without horizontal overflow'
   }
 });
 
+test('all library images preserve their full source framing on mobile and desktop', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/biblia/');
+    const imagePolicies = await page.locator('img').evaluateAll(images => images.map(image => ({
+      src: image.getAttribute('src'),
+      fit: getComputedStyle(image).objectFit,
+      clip: getComputedStyle(image).clipPath
+    })));
+    expect(imagePolicies.length).toBeGreaterThan(20);
+    expect(imagePolicies.filter(image => image.fit !== 'contain' || image.clip !== 'none')).toEqual([]);
+  }
+});
+
 test('searching Gadiel opens Gaddiel in Numbers 13:11', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/');
@@ -254,6 +268,8 @@ test('Israel and Judah banner and unified Seol/Hades references display correctl
   await expect(tartarus).toContainText(/segundo cielo y el Tártaro sean el mismo lugar/i);
   await expect(tartarus.locator('img')).toHaveCount(1);
   await expect(tartarus.locator('img')).toHaveAttribute('src', 'assets/mas-alla/segundo-cielo.png');
+  await expect(afterlife.getByRole('heading', { name: 'El Abismo', exact: true })).toBeAttached();
+  await expect(afterlife).not.toContainText('El abismo y Abaddón');
 
   await page.locator('#view-menu-toggle').click();
   await page.locator('.view-tab[data-view="gnosticism"]').click();
