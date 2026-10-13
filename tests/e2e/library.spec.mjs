@@ -246,6 +246,7 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#linea-de-tiempo');
   for (const title of [
+    'La tierra caótica y el Espíritu sobre las aguas',
     'Los hijos de Dios celebran la fundación de la tierra',
     'Creación del mundo y del ser humano',
     'La caída y la expulsión del Edén',
@@ -269,6 +270,10 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await expect(egyptJudgment.getByRole('link', { name: 'Éxodo 12:12' })).toHaveAttribute('href', /obra=rvr1909-exodo&capitulo=12/);
   const abraham = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'El llamado de Abraham' }) });
   await expect(abraham).toContainText('promete dar esa tierra a su descendencia');
+  const genesisBeginning = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La tierra caótica y el Espíritu sobre las aguas' }) });
+  await expect(genesisBeginning).toContainText('el Espíritu de Dios aleteaba sobre las aguas');
+  const earlyTitles = await page.locator('.timeline-event h3').allTextContents();
+  expect(earlyTitles.indexOf('La tierra caótica y el Espíritu sobre las aguas')).toBe(earlyTitles.indexOf('Los hijos de Dios celebran la fundación de la tierra') - 1);
   const floodTitles = await page.locator('.timeline-event h3').allTextContents();
   expect(floodTitles.indexOf('Se abren las fuentes del gran abismo')).toBe(floodTitles.indexOf('Cuarenta días y cuarenta noches de tormenta') - 1);
   const floodStart = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Se abren las fuentes del gran abismo' }) });
