@@ -252,6 +252,7 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
     'La caída y la expulsión del Edén',
     'Caín teme ser hallado',
     'Jacobo es curado de una mordedura de víbora',
+    'María Magdalena consuela a los discípulos',
     'Las diez plagas de Egipto',
     'Se abren las fuentes del gran abismo',
     'Juicio contra los dioses de Egipto',
@@ -287,6 +288,11 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   const jamesViper = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Jacobo es curado de una mordedura de víbora' }) });
   await expect(jamesViper).toContainText('Evangelio de la infancia de Tomás cuenta que José envió a su hijo Jacobo');
   await expect(jamesViper.getByRole('link', { name: 'Evangelio de la infancia de Tomás 16:1–2' })).toHaveAttribute('href', /obra=infancy-thomas-es&capitulo=16/);
+  const maryTitles = await page.locator('.timeline-event h3').allTextContents();
+  expect(maryTitles.indexOf('María Magdalena consuela a los discípulos')).toBe(maryTitles.indexOf('Elección de Matías') + 1);
+  const maryComforts = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'María Magdalena consuela a los discípulos' }) });
+  await expect(maryComforts).toContainText('No lloréis. No os aflijáis');
+  await expect(maryComforts.getByRole('link', { name: 'Evangelio de María 5:2' })).toHaveAttribute('href', /obra=gospel-mary-es&capitulo=3#pasaje-3-1/);
   const earlyTitles = await page.locator('.timeline-event h3').allTextContents();
   expect(earlyTitles.indexOf('La tierra caótica y el Espíritu sobre las aguas')).toBe(earlyTitles.indexOf('Los hijos de Dios celebran la fundación de la tierra') - 1);
   const floodTitles = await page.locator('.timeline-event h3').allTextContents();
