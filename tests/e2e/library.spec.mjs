@@ -367,6 +367,23 @@ test('Psalms of Solomon prophecy links to the restored Davidic king passage', as
   await expect(page.locator('#pasaje-17-24')).toContainText('vara de hierro');
 });
 
+test('Jubilees calendar converts the reference date and navigates between months', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-10-13T12:00:00-03:00'));
+  await page.goto('/biblia/#calendario-los-jubileos');
+
+  await expect(page.getByRole('heading', { name: 'Calendario Los Jubileos' })).toBeVisible();
+  await expect(page.locator('#jubilee-today-date')).toHaveText('12 de Septiembre, año 2033');
+  await expect(page.locator('#jubilee-day-number')).toHaveText('254');
+  await expect(page.locator('#jubilee-month-name')).toHaveText('Septiembre');
+  await expect(page.locator('#jubilee-calendar-grid .jubilee-day')).toHaveCount(31);
+
+  await page.getByRole('button', { name: 'Mes siguiente' }).click();
+  await expect(page.locator('#jubilee-month-name')).toHaveText('Octubre');
+  await expect(page.locator('#jubilee-calendar-grid .jubilee-day')).toHaveCount(30);
+  await page.getByRole('button', { name: 'Hoy' }).click();
+  await expect(page.locator('#jubilee-month-name')).toHaveText('Septiembre');
+});
+
 test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#linea-de-tiempo');
