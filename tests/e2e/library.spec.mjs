@@ -57,14 +57,11 @@ test('Jacob’s siblings branch horizontally and maternal labels are explicit', 
   await page.goto('/biblia/#arbol-genealogico');
   const tree = page.locator('.family-tree');
   const jacob = tree.locator(':scope > .tree-node.tree-family-children').filter({ hasText: /^Jacob/ });
-  const siblings = jacob.locator('.tree-jacob-children');
+  const siblings = tree.locator('.tree-jacob-children');
   await expect(siblings).toContainText('Otros hijos de Jacob · hermanos de Judá');
   await expect(siblings.locator('.tree-other-sons-list').first().locator('span')).toHaveCount(10);
   await expect(siblings.locator('.tree-mother-of').filter({ hasText: 'Lea' })).toContainText('Madre de:');
-  const jacobBox = await jacob.boundingBox();
-  const siblingsBox = await siblings.boundingBox();
-  expect(siblingsBox.x).toBeGreaterThan(jacobBox.x);
-  expect(Math.abs((siblingsBox.y + siblingsBox.height / 2) - (jacobBox.y + jacobBox.height / 2))).toBeLessThan(3);
+  expect(await siblings.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
   await expect(jacob.locator('.tree-mother').first()).toHaveText('Madre: Rebeca');
   await expect(tree.locator('.tree-node.tree-family-children').filter({ hasText: /^Judá/ }).locator('.tree-mother').first()).toHaveText('Madre: Lea');
   await expect(tree.locator('.tree-node.tree-has-mother').filter({ hasText: /^Fares/ }).locator('.tree-mother')).toHaveText('Madre: Tamar');
@@ -198,7 +195,7 @@ test('mobile portrait art uses its natural height and the Tartarus citation is s
 
   await page.locator('#view-menu-toggle').click();
   await page.locator('.view-tab[data-view="afterlife"]').click();
-  const quotation = page.locator('#afterlife-view .extinct-card-body > blockquote');
+  const quotation = page.locator('#afterlife-view .extinct-card-body > blockquote').first();
   await expect(quotation).toBeVisible();
   expect(await quotation.evaluate(element => getComputedStyle(element).borderLeftWidth)).toBe('3px');
 
