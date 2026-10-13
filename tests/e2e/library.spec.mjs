@@ -350,6 +350,23 @@ test('Testament of Simeon prophecy displays its image and chapter reference', as
   await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
 });
 
+test('Psalms of Solomon prophecy links to the restored Davidic king passage', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/biblia/#profecias');
+  const card = page.locator('#prophecies-view .prophecy-card').filter({ has: page.getByRole('heading', { name: 'El Hijo de David y la vara de hierro' }) });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Con vara de hierro');
+  await expect(card).toContainText('obra no canónica anterior al cristianismo');
+  await expect(card.getByRole('link', { name: 'Salmos de Salomón 17:21–24' })).toHaveAttribute('href', /obra=psalms-solomon-es&capitulo=17#pasaje-17-21/);
+  const image = card.locator('.prophecy-card-image');
+  await image.scrollIntoViewIfNeeded();
+  await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+
+  await card.getByRole('link', { name: 'Salmos de Salomón 17:21–24' }).click();
+  await expect(page.locator('#pasaje-17-21')).toContainText('el hijo de David');
+  await expect(page.locator('#pasaje-17-24')).toContainText('vara de hierro');
+});
+
 test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#linea-de-tiempo');
