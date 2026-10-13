@@ -52,8 +52,9 @@ test('the timeline adds the divine-council arc without claiming the texts name t
   await expect(synthesis.getByRole('link', { name: 'Hechos 2:1–11 · Pentecostés' })).toHaveAttribute('href', /hechos&capitulo=2/);
   for (const title of ['Las naciones y los hijos de Dios', 'El juicio del consejo divino', 'La cruz, los poderes y Pentecostés']) {
     const card = track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title, exact: true }) });
-    await expect(card.locator('img.timeline-image')).toHaveJSProperty('complete', true);
-    await expect.poll(() => card.locator('img.timeline-image').evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+    const image = card.locator('img.timeline-image');
+    await image.evaluate(element => { element.loading = 'eager'; });
+    await expect.poll(() => image.evaluate(element => element.naturalWidth)).toBeGreaterThan(0);
   }
 });
 
