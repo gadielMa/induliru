@@ -248,6 +248,7 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   for (const title of [
     'La caída y la expulsión del Edén',
     'Las diez plagas de Egipto',
+    'Juicio contra los dioses de Egipto',
     'Sansón',
     'Elías humilla a los profetas de Baal',
     'Elías es llevado en un carro de fuego',
@@ -260,6 +261,11 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
   }
+  const egyptJudgment = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Juicio contra los dioses de Egipto' }) });
+  await expect(egyptJudgment).toContainText('no los identifica con los setenta elohim');
+  await expect(egyptJudgment.getByRole('link', { name: 'Éxodo 12:12' })).toHaveAttribute('href', /obra=rvr1909-exodo&capitulo=12/);
+  const abraham = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'El llamado de Abraham' }) });
+  await expect(abraham).toContainText('promete dar esa tierra a su descendencia');
   const isaiah = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Isaías y Emanuel' }) });
   await isaiah.getByRole('button', { name: /Emanuel y el heredero de David/ }).click();
   await expect(page.locator('#prophecies-view')).toBeVisible();
