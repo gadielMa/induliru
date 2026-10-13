@@ -250,6 +250,8 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
     'Los hijos de Dios celebran la fundación de la tierra',
     'Creación del mundo y del ser humano',
     'La caída y la expulsión del Edén',
+    'Caín teme ser hallado',
+    'Jacobo es curado de una mordedura de víbora',
     'Las diez plagas de Egipto',
     'Se abren las fuentes del gran abismo',
     'Juicio contra los dioses de Egipto',
@@ -272,6 +274,19 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await expect(abraham).toContainText('promete dar esa tierra a su descendencia');
   const genesisBeginning = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La tierra caótica y el Espíritu sobre las aguas' }) });
   await expect(genesisBeginning).toContainText('el Espíritu de Dios aleteaba sobre las aguas');
+  const cainTitles = await page.locator('.timeline-event h3').allTextContents();
+  expect(cainTitles.indexOf('Caín teme ser hallado')).toBe(cainTitles.indexOf('Caín y Abel') + 1);
+  expect(cainTitles.indexOf('¿Cómo había hombres fuera del Edén si Adán fue el primer hombre?')).toBe(cainTitles.indexOf('Caín teme ser hallado') + 1);
+  const cainFear = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Caín teme ser hallado' }) });
+  await expect(cainFear).toContainText('cualquiera que me halle me matará');
+  const cainQuestion = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: '¿Cómo había hombres fuera del Edén si Adán fue el primer hombre?' }) });
+  await expect(cainQuestion).toContainText('Génesis dice que Adán tuvo otros hijos e hijas');
+  await expect(cainQuestion.getByRole('link', { name: 'Génesis 5:4' })).toHaveAttribute('href', /obra=rvr1909-genesis&capitulo=5#pasaje-5-4/);
+  const infancyTitles = await page.locator('.timeline-event h3').allTextContents();
+  expect(infancyTitles.indexOf('Jacobo es curado de una mordedura de víbora')).toBe(infancyTitles.indexOf('Relatos del niño Jesús') + 1);
+  const jamesViper = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Jacobo es curado de una mordedura de víbora' }) });
+  await expect(jamesViper).toContainText('Evangelio de la infancia de Tomás cuenta que José envió a su hijo Jacobo');
+  await expect(jamesViper.getByRole('link', { name: 'Evangelio de la infancia de Tomás 16:1–2' })).toHaveAttribute('href', /obra=infancy-thomas-es&capitulo=16/);
   const earlyTitles = await page.locator('.timeline-event h3').allTextContents();
   expect(earlyTitles.indexOf('La tierra caótica y el Espíritu sobre las aguas')).toBe(earlyTitles.indexOf('Los hijos de Dios celebran la fundación de la tierra') - 1);
   const floodTitles = await page.locator('.timeline-event h3').allTextContents();
@@ -314,6 +329,19 @@ test('Jesus resurrection links to the Shroud and Mary references identify Mary M
   await page.getByRole('button', { name: 'Gnosticismo' }).click();
   await expect(page.getByRole('heading', { name: /Evangelio de María Magdalena · BG 8502, pp\. 7–10/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Evangelio de María Magdalena · BG 8502, pp\. 15–19/ })).toBeVisible();
+});
+
+test('Testament of Simeon prophecy displays its image and chapter reference', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/biblia/#profecias');
+  const card = page.locator('#prophecies-view .prophecy-card').filter({ has: page.getByRole('heading', { name: 'La salvación vendrá de Leví y Judá' }) });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Testamento de Simeón');
+  await expect(card).toContainText('posibles interpolaciones cristianas');
+  await expect(card.getByRole('link', { name: /Testamento de Simeón 7:1–3/ })).toHaveAttribute('href', /obra=testament-12-patriarchs-es&capitulo=7/);
+  const image = card.locator('.prophecy-card-image');
+  await image.scrollIntoViewIfNeeded();
+  await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
 });
 
 test('timeline adds the Annunciation, Mary manuscript links, and Revelation finale', async ({ page }) => {
