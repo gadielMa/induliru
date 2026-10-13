@@ -36,6 +36,27 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
+test('the timeline adds the divine-council arc without claiming the texts name the seventy elohim', async ({ page }) => {
+  await page.goto('/biblia/#linea-de-tiempo');
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="timeline"]').click();
+  const track = page.locator('#timeline-view .timeline-track');
+  for (const title of ['La torre de Babel', 'Las naciones y los hijos de Dios', 'El juicio del consejo divino', 'Pentecostés', 'La cruz, los poderes y Pentecostés']) {
+    await expect(track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title, exact: true }) })).toHaveCount(1);
+  }
+  const titles = await track.locator('.timeline-event h3').allTextContents();
+  expect(titles.indexOf('Las naciones y los hijos de Dios')).toBeLessThan(titles.indexOf('El juicio del consejo divino'));
+  expect(titles.indexOf('Pentecostés')).toBeLessThan(titles.indexOf('La cruz, los poderes y Pentecostés'));
+  const synthesis = track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La cruz, los poderes y Pentecostés', exact: true }) });
+  await expect(synthesis).toContainText('ninguno de estos pasajes identifica explícitamente a esos poderes con los setenta elohim');
+  await expect(synthesis.getByRole('link', { name: 'Hechos 2:1–11 · Pentecostés' })).toHaveAttribute('href', /hechos&capitulo=2/);
+  for (const title of ['Las naciones y los hijos de Dios', 'El juicio del consejo divino', 'La cruz, los poderes y Pentecostés']) {
+    const card = track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title, exact: true }) });
+    await expect(card.locator('img.timeline-image')).toHaveJSProperty('complete', true);
+    await expect.poll(() => card.locator('img.timeline-image').evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
+  }
+});
+
 test('genealogy shows collateral sibling branches separately from the direct line', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/biblia/#arbol-genealogico');
@@ -348,6 +369,31 @@ test('extinct animals and lost places are separate views and their images load',
   const azazel = page.locator('#enoch-view .enoch-passage').filter({ has: page.getByRole('heading', { name: 'Enoc 10:4' }) }).locator('img');
   await expect(azazel).toBeVisible();
   await expect.poll(() => azazel.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+});
+
+test('devil and related-figure cards are alphabetized and new ancient deities have illustrations', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/biblia/');
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="devils"]').click();
+  const grid = page.locator('#devils-view .extinct-grid');
+  await expect(grid).toContainText('Asera / Asherah');
+  await expect(grid).toContainText('Astarot / Astarté');
+  await expect(grid).toContainText('Quemos / Chemosh');
+  await expect(grid).toContainText('Moloc / Molok');
+  await expect(grid).toContainText('Dagón');
+  await expect(grid).toContainText('Tamuz / Tammuz');
+  await expect(page.locator('#devils-view .extinct-intro')).toContainText('no significa que sus propias tradiciones las consideraran demonios');
+
+  const titles = await grid.locator(':scope > .extinct-card h3').allTextContents();
+  const sortedTitles = [...titles].sort((first, second) => first.localeCompare(second, 'es', { sensitivity: 'base', numeric: true }));
+  expect(titles).toEqual(sortedTitles);
+
+  for (const slug of ['asera', 'astarte', 'quemos', 'dagon', 'tamuz', 'moloc']) {
+    const image = page.locator(`#diablos-${slug} img`);
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
 });
 
 test('every passage card in Gnostic traditions has a loaded illustration', async ({ page }) => {
