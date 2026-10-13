@@ -45,6 +45,7 @@ test('the timeline adds the divine-council arc without claiming the texts name t
     await expect(track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: title, exact: true }) })).toHaveCount(1);
   }
   const titles = await track.locator('.timeline-event h3').allTextContents();
+  expect(titles.indexOf('Las naciones y los hijos de Dios')).toBeLessThan(titles.indexOf('La torre de Babel'));
   expect(titles.indexOf('Las naciones y los hijos de Dios')).toBeLessThan(titles.indexOf('El juicio del consejo divino'));
   expect(titles.indexOf('Pentecostés')).toBeLessThan(titles.indexOf('La cruz, los poderes y Pentecostés'));
   const synthesis = track.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'La cruz, los poderes y Pentecostés', exact: true }) });
