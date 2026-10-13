@@ -71,3 +71,18 @@ test('Spanish Psalms of Solomon contains all 18 psalms without placeholder chapt
   assert.match(work.chapters.find(chapter => chapter.number === 2).verses[1].text, /naciones extranjeras.*altar/i);
   assert.match(work.chapters.find(chapter => chapter.number === 17).verses.find(verse => verse.number === '24').text, /vara de hierro/i);
 });
+
+test('Spanish Apocryphon of John contains the complete 21-division working translation', async () => {
+  const work = JSON.parse(await readFile(new URL('../biblia/textos/apocryphon-juan.es.json', import.meta.url), 'utf8'));
+  const passages = work.chapters.flatMap(chapter => chapter.verses);
+  const fullText = passages.map(verse => verse.text).join(' ');
+
+  assert.equal(work.chapters.length, 21);
+  assert.equal(passages.length, 290);
+  assert.ok(fullText.split(/\s+/).length > 7500);
+  assert.doesNotMatch(work.translator, /resumen/i);
+  assert.match(fullText, /Barbelo/);
+  assert.match(fullText, /Yaldabaot/);
+  assert.match(fullText, /creamos un hombre según la imagen de Dios/i);
+  assert.match(work.chapters.at(-1).title, /Encargo final a Juan/);
+});

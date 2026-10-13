@@ -379,6 +379,17 @@ test('Spanish Psalms of Solomon reader shows the complete chapters', async ({ pa
   await expect(page.locator('#pasaje-2-37')).toContainText('Bendito sea el Señor');
 });
 
+test('Spanish Apocryphon of John reader reaches the beginning and final commission', async ({ page }) => {
+  await page.goto('/biblia/lectura/?obra=apocryphon-john-es&capitulo=1');
+  await expect(page.getByRole('heading', { name: /Prólogo y pregunta de Juan/ })).toBeVisible();
+  await expect(page.locator('.notice')).not.toContainText('resumen');
+  await expect(page.locator('#pasaje-1-1')).toContainText('La enseñanza del salvador');
+
+  await page.goto('/biblia/lectura/?obra=apocryphon-john-es&capitulo=21');
+  await expect(page.getByRole('heading', { name: /Encargo final a Juan/ })).toBeVisible();
+  await expect(page.locator('#pasaje-21-1')).toContainText('misterio de la raza inmóvil');
+});
+
 test('Jubilees calendar converts the reference date and navigates between months', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-10-13T12:00:00-03:00'));
   await page.goto('/biblia/#calendario-los-jubileos');
