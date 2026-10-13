@@ -249,6 +249,7 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
     'La caída y la expulsión del Edén',
     'Las diez plagas de Egipto',
     'Sansón',
+    'Elías humilla a los profetas de Baal',
     'Elías es llevado en un carro de fuego',
     'Isaías y Emanuel',
     'Daniel en el foso de los leones'
@@ -386,6 +387,9 @@ test('devil and related-figure cards are alphabetized and new ancient deities ha
   await expect(grid).toContainText('Dagón');
   await expect(grid).toContainText('Tamuz / Tammuz');
   await expect(page.locator('#devils-view .extinct-intro')).toContainText('no significa que sus propias tradiciones las consideraran demonios');
+  const Shemihaza = grid.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'Shemihaza y los Vigilantes', exact: true }) });
+  await expect(Shemihaza.locator('img')).toHaveAttribute('src', 'assets/enoc/vigilantes.jpg');
+  await expect(Shemihaza).toContainText('no los llaman Shemihaza');
 
   const titles = await grid.locator(':scope > .extinct-card h3').allTextContents();
   const sortedTitles = [...titles].sort((first, second) => first.localeCompare(second, 'es', { sensitivity: 'base', numeric: true }));
