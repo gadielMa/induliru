@@ -250,6 +250,7 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
     'Creación del mundo y del ser humano',
     'La caída y la expulsión del Edén',
     'Las diez plagas de Egipto',
+    'Se abren las fuentes del gran abismo',
     'Juicio contra los dioses de Egipto',
     'Sansón',
     'Elías humilla a los profetas de Baal',
@@ -268,6 +269,11 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await expect(egyptJudgment.getByRole('link', { name: 'Éxodo 12:12' })).toHaveAttribute('href', /obra=rvr1909-exodo&capitulo=12/);
   const abraham = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'El llamado de Abraham' }) });
   await expect(abraham).toContainText('promete dar esa tierra a su descendencia');
+  const floodTitles = await page.locator('.timeline-event h3').allTextContents();
+  expect(floodTitles.indexOf('Se abren las fuentes del gran abismo')).toBe(floodTitles.indexOf('Cuarenta días y cuarenta noches de tormenta') - 1);
+  const floodStart = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Se abren las fuentes del gran abismo' }) });
+  await expect(floodStart).toContainText('año 600 de Noé · mes 2, día 17');
+  await expect(floodStart.getByRole('link', { name: 'Génesis 7:11' })).toHaveAttribute('href', /obra=rvr1909-genesis&capitulo=7#pasaje-7-11/);
   const isaiah = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Isaías y Emanuel' }) });
   await isaiah.getByRole('button', { name: /Emanuel y el heredero de David/ }).click();
   await expect(page.locator('#prophecies-view')).toBeVisible();
