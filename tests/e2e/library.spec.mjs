@@ -246,6 +246,8 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#linea-de-tiempo');
   for (const title of [
+    'Los hijos de Dios celebran la fundación de la tierra',
+    'Creación del mundo y del ser humano',
     'La caída y la expulsión del Edén',
     'Las diez plagas de Egipto',
     'Juicio contra los dioses de Egipto',
