@@ -371,6 +371,14 @@ test('Psalms of Solomon prophecy links to the restored Davidic king passage', as
   await expect(page.locator('#pasaje-17-24')).toContainText('vara de hierro');
 });
 
+test('Spanish Psalms of Solomon reader shows the complete chapters', async ({ page }) => {
+  await page.goto('/biblia/lectura/?obra=psalms-solomon-es&capitulo=1');
+  await expect(page.locator('#pasaje-1-8')).toContainText('cosas santas del Señor');
+
+  await page.goto('/biblia/lectura/?obra=psalms-solomon-es&capitulo=2');
+  await expect(page.locator('#pasaje-2-37')).toContainText('Bendito sea el Señor');
+});
+
 test('Jubilees calendar converts the reference date and navigates between months', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-10-13T12:00:00-03:00'));
   await page.goto('/biblia/#calendario-los-jubileos');

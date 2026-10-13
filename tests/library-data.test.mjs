@@ -62,3 +62,12 @@ test('text search prioritizes Spanish matches before English while preserving th
   const matches = findTextSearchMatches(index, 'satan');
   assert.deepEqual(matches.map(item => item.title), ['Spanish first', 'Spanish second', 'English first', 'English second']);
 });
+
+test('Spanish Psalms of Solomon contains all 18 psalms without placeholder chapters', async () => {
+  const work = JSON.parse(await readFile(new URL('../biblia/textos/psalms-solomon.es.json', import.meta.url), 'utf8'));
+  assert.equal(work.chapters.length, 18);
+  assert.equal(work.chapters.reduce((total, chapter) => total + chapter.verses.length, 0), 287);
+  assert.ok(work.chapters.every(chapter => chapter.verses.length > 1));
+  assert.match(work.chapters.find(chapter => chapter.number === 2).verses[1].text, /naciones extranjeras.*altar/i);
+  assert.match(work.chapters.find(chapter => chapter.number === 17).verses.find(verse => verse.number === '24').text, /vara de hierro/i);
+});
