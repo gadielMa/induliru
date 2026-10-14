@@ -390,6 +390,28 @@ test('Spanish Apocryphon of John reader reaches the beginning and final commissi
   await expect(page.locator('#pasaje-21-1')).toContainText('misterio de la raza inmóvil');
 });
 
+test('Spanish Bible reader navigates Numbers chapters without repeating generic titles', async ({ page }) => {
+  await page.goto('/biblia/lectura/?obra=rvr1909-numeros&capitulo=14');
+  await expect(page.getByRole('heading', { name: 'Capítulo 14', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Siguiente →' })).toHaveAttribute('href', /obra=rvr1909-numeros&capitulo=15/);
+  await page.getByRole('link', { name: 'Siguiente →' }).first().click();
+  await expect(page).toHaveURL(/obra=rvr1909-numeros&capitulo=15/);
+  await expect(page.getByRole('heading', { name: 'Capítulo 15', exact: true })).toBeVisible();
+});
+
+test('readers open the surviving Egerton and Oxyrhynchus gospel fragments', async ({ page }) => {
+  await page.goto('/biblia/lectura/?obra=egerton-gospel-es');
+  await expect(page.getByRole('heading', { name: 'Evangelio desconocido (Papiro Egerton 2)' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Fragmento 1, reverso/ })).toBeVisible();
+  await expect(page.locator('.notice')).not.toContainText('resumen');
+  await expect(page.locator('#pasaje-2-2')).toContainText('Quiero; queda limpio');
+
+  await page.goto('/biblia/lectura/?obra=oxyrhynchus-840-es');
+  await expect(page.getByRole('heading', { name: 'Evangelio de Oxirrinco 840' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /La pureza verdadera/ })).toBeVisible();
+  await expect(page.locator('#pasaje-2-3')).toContainText('escorpiones');
+});
+
 test('Jubilees calendar converts the reference date and navigates between months', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2026-10-13T12:00:00-03:00'));
   await page.goto('/biblia/#calendario-los-jubileos');
