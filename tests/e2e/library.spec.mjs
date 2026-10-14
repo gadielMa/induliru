@@ -382,7 +382,7 @@ test('Spanish Psalms of Solomon reader shows the complete chapters', async ({ pa
 test('Spanish Apocryphon of John reader reaches the beginning and final commission', async ({ page }) => {
   await page.goto('/biblia/lectura/?obra=apocryphon-john-es&capitulo=1');
   await expect(page.getByRole('heading', { name: /Prólogo y pregunta de Juan/ })).toBeVisible();
-  await expect(page.locator('.notice')).not.toContainText('resumen');
+  await expect(page.locator('.book-summary')).toBeVisible();
   await expect(page.locator('#pasaje-1-1')).toContainText('La enseñanza del salvador');
 
   await page.goto('/biblia/lectura/?obra=apocryphon-john-es&capitulo=21');
@@ -393,7 +393,7 @@ test('Spanish Apocryphon of John reader reaches the beginning and final commissi
 test('Spanish Bible reader navigates Numbers chapters without repeating generic titles', async ({ page }) => {
   await page.goto('/biblia/lectura/?obra=rvr1909-numeros&capitulo=14');
   await expect(page.getByRole('heading', { name: 'Capítulo 14', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Siguiente →' })).toHaveAttribute('href', /obra=rvr1909-numeros&capitulo=15/);
+  await expect(page.getByRole('link', { name: 'Siguiente →' }).first()).toHaveAttribute('href', /obra=rvr1909-numeros&capitulo=15/);
   await page.getByRole('link', { name: 'Siguiente →' }).first().click();
   await expect(page).toHaveURL(/obra=rvr1909-numeros&capitulo=15/);
   await expect(page.getByRole('heading', { name: 'Capítulo 15', exact: true })).toBeVisible();
@@ -403,7 +403,7 @@ test('readers open the surviving Egerton and Oxyrhynchus gospel fragments', asyn
   await page.goto('/biblia/lectura/?obra=egerton-gospel-es');
   await expect(page.getByRole('heading', { name: 'Evangelio desconocido (Papiro Egerton 2)' })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Fragmento 1, reverso/ })).toBeVisible();
-  await expect(page.locator('.notice')).not.toContainText('resumen');
+  await expect(page.locator('.book-summary')).toBeVisible();
   await expect(page.locator('#pasaje-2-2')).toContainText('Quiero; queda limpio');
 
   await page.goto('/biblia/lectura/?obra=oxyrhynchus-840-es');
