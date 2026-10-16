@@ -332,9 +332,9 @@ test('Jesus resurrection links to the Shroud and Mary references identify Mary M
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/biblia/#linea-de-tiempo');
   const resurrection = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Resurrección de Jesús' }) });
-  await resurrection.getByRole('button', { name: /Qué dicen los Evangelios/ }).click();
+  await resurrection.getByRole('button', { name: /La Sábana Santa de Turín/ }).click();
   await expect(page.locator('#shroud-view')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Qué dicen los Evangelios' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'La Sábana Santa de Turín' })).toBeVisible();
   await page.getByRole('button', { name: 'Secciones · Sábana Santa' }).click();
   await page.getByRole('button', { name: 'Gnosticismo' }).click();
   await expect(page.getByRole('heading', { name: /Evangelio de María Magdalena · BG 8502, pp\. 7–10/ })).toBeVisible();
