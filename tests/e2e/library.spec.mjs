@@ -28,6 +28,34 @@ test('the section menu responds to scrolling at mobile and desktop widths', asyn
   await expect.poll(() => toggle.evaluate(element => element.getBoundingClientRect().width)).toBeLessThan(desktopWideWidth * 0.7);
 });
 
+test('section menu is alphabetized and every tile has the same height', async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto('/biblia/');
+    await page.locator('#view-menu-toggle').click();
+    const tiles = page.locator('#view-links .view-tab');
+    const layout = await tiles.evaluateAll(elements => ({
+      labels: elements.map(element => element.textContent.trim()),
+      heights: elements.map(element => element.getBoundingClientRect().height)
+    }));
+    const collator = new Intl.Collator('es', { sensitivity: 'base' });
+    expect(layout.labels).toEqual([...layout.labels].sort(collator.compare));
+    expect(new Set(layout.heights.map(height => Math.round(height * 10) / 10)).size).toBe(1);
+  }
+});
+
+test('prayers show the Matthew text and the biblical portion of the Ave Maria', async ({ page }) => {
+  await page.goto('/biblia/');
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="prayers"]').click();
+  const prayers = page.locator('#prayers-view');
+  await expect(prayers.locator('.prayer-scripture').nth(0)).toContainText('Padre nuestro que estás en los cielos');
+  await expect(prayers.locator('.prayer-scripture').nth(0)).toContainText('Danos hoy nuestro pan cotidiano');
+  await expect(prayers.locator('.prayer-scripture').nth(1)).toContainText('el Señor es contigo');
+  await expect(prayers.locator('.prayer-scripture').nth(1)).toContainText('bendito el fruto de tu vientre');
+  await expect(prayers).toContainText('Se omite la súplica posterior');
+});
+
 test('direct index.html links are cleaned to the short Bible URL without losing the fragment', async ({ page }) => {
   await page.goto('/biblia/index.html#linea-de-tiempo');
   await expect(page).toHaveURL(/\/biblia\/#linea-de-tiempo$/);
