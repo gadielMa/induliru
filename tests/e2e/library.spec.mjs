@@ -578,6 +578,21 @@ test('Israel and Judah banner and unified Seol/Hades references display correctl
   await expect(john17).not.toContainText('paráfrasis interpretativa');
 });
 
+test('Frankfurt silver inscription section opens directly and both supplied images load', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/biblia/#amuleto-frankfurt');
+  const section = page.locator('#frankfurt-amulet-view');
+  await expect(section).toBeVisible();
+  await expect(section.getByRole('heading', { name: 'La inscripción de plata de Frankfurt' })).toBeVisible();
+  await expect(section).toContainText('230–270 d. C.');
+  const images = section.locator('.frankfurt-figures img');
+  await expect(images).toHaveCount(2);
+  for (const image of await images.all()) {
+    await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+  }
+  await expect(section).toContainText('Filipenses 2:10–11');
+});
+
 test('John 20 proceeds to John 21 and the last chapter proceeds to Acts 1', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/lectura/?obra=rvr1909-juan&capitulo=20');
