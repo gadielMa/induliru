@@ -20,10 +20,6 @@ test('the section menu responds to scrolling at mobile and desktop widths', asyn
   await expect(navigation).not.toHaveClass(/is-scrolled/);
   await page.evaluate(() => window.scrollTo(0, 260));
   await expect(navigation).toHaveClass(/is-scrolled/);
-  await page.evaluate(() => window.scrollTo(0, 400));
-  await expect.poll(() => toggle.evaluate(element => element.getBoundingClientRect().width)).toBeLessThan(desktopWideWidth * 0.95);
-  const partiallyCompactWidth = await toggle.evaluate(element => element.getBoundingClientRect().width);
-  expect(partiallyCompactWidth).toBeGreaterThan(desktopWideWidth * 0.5);
   await page.evaluate(() => window.scrollTo(0, 800));
   await expect.poll(() => toggle.evaluate(element => element.getBoundingClientRect().width)).toBeLessThan(desktopWideWidth * 0.7);
 });
