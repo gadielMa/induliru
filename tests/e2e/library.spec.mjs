@@ -121,7 +121,7 @@ test('Jacob’s siblings branch horizontally and maternal labels are explicit', 
 test('catalog dates use a centered composition-date gradient and sort chronologically', async ({ page }) => {
   await page.goto('/biblia/');
   await expect(page.getByText('Escala temporal de composición', { exact: false })).toBeVisible();
-  await expect(page.getByText(/no demuestra por sí sola la fidelidad ni la autenticidad/i)).toBeVisible();
+  await expect(page.getByText(/no determina por sí sola la fidelidad ni la autenticidad/i)).toBeVisible();
   const nearDate = page.locator('#tbody .fecha-proximity').filter({ hasText: '~95–100 d.C.' }).first();
   const distantDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo IV d.C.' }).first();
   const ancientDate = page.locator('#tbody .fecha-proximity').filter({ hasText: 'siglo X–VI a.C.' }).first();
@@ -316,7 +316,8 @@ test('timeline illustrations load and Isaiah links to Prophecies', async ({ page
   await expect(davidGoliath.getByRole('link', { name: 'Génesis 6:4', exact: true })).toHaveAttribute('href', /obra=rvr1909-genesis&capitulo=6#pasaje-6-4/);
   await expect(davidGoliath.getByRole('link', { name: '2 Samuel 21:15–22', exact: true })).toHaveAttribute('href', /obra=rvr1909-2-samuel&capitulo=21#pasaje-21-15/);
   const infancyTitles = await page.locator('.timeline-event h3').allTextContents();
-  expect(infancyTitles.indexOf('Jacobo es curado de una mordedura de víbora')).toBe(infancyTitles.indexOf('Relatos del niño Jesús') + 1);
+  expect(infancyTitles.indexOf('Jesús habla desde la cuna')).toBe(infancyTitles.indexOf('Relatos del niño Jesús') + 1);
+  expect(infancyTitles.indexOf('Jacobo es curado de una mordedura de víbora')).toBe(infancyTitles.indexOf('Jesús habla desde la cuna') + 1);
   const jamesViper = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Jacobo es curado de una mordedura de víbora' }) });
   await expect(jamesViper).toContainText('Evangelio de la infancia de Tomás cuenta que José envió a su hijo Jacobo');
   await expect(jamesViper.getByRole('link', { name: 'Evangelio de la infancia de Tomás 16:1–2' })).toHaveAttribute('href', /obra=infancy-thomas-es&capitulo=16/);
