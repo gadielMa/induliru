@@ -7,6 +7,7 @@ export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: false,
   reporter: 'list',
+  retries: process.env.CI ? 1 : 0,
   use: { ...devices['Desktop Chrome'], baseURL, headless: true },
   webServer: {
     command: 'node scripts/serve-static.mjs public-site',
