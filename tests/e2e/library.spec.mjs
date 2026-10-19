@@ -142,17 +142,17 @@ test('catalog dates use a centered composition-date gradient and sort chronologi
 });
 
 test('the Shroud section is one continuous body on mobile and desktop', async ({ page }) => {
+  await page.goto('/biblia/');
+  await page.locator('#view-menu-toggle').click();
+  await page.locator('.view-tab[data-view="shroud"]').click();
   for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    await page.goto('/biblia/');
-    await page.locator('#view-menu-toggle').click();
-    await page.locator('.view-tab[data-view="shroud"]').click();
     const figure = page.locator('.bilirubin-figure');
     await expect(figure).toBeVisible();
     await expect(figure.locator('img')).toHaveJSProperty('naturalWidth', 327);
     await expect(page.locator('#shroud-view > .library-single-body')).toHaveCount(1);
-    const gridDisplay = await page.locator('#shroud-view .extinct-grid').evaluate(element => getComputedStyle(element).display);
-    expect(gridDisplay).toBe('block');
+    const imagePairDisplay = await page.locator('#shroud-view .shroud-image-pair').evaluate(element => getComputedStyle(element).display);
+    expect(imagePairDisplay).toBe('grid');
     const cardBorders = await page.locator('#shroud-view .extinct-card').evaluateAll(cards => cards.map(card => getComputedStyle(card).borderTopWidth));
     expect(cardBorders.every(width => width === '0px')).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
