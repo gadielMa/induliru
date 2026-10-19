@@ -150,6 +150,19 @@ test('catalog dates use a centered composition-date gradient and sort chronologi
   expect(descendingDates.indexOf('~150 d.C.')).toBeLessThan(descendingDates.indexOf('~48–55 d.C.'));
 });
 
+test('the catalog stays responsive without eagerly loading its full-text index', async ({ page }) => {
+  const indexRequests = [];
+  page.on('request', request => {
+    if (request.url().includes('/textos/search-index.json')) indexRequests.push(request.url());
+  });
+
+  await page.goto('/biblia/');
+  await expect(page.locator('#row-count')).toHaveText('Mostrando 159 de 159 textos');
+  await page.getByRole('button', { name: /Torá \/ Antiguo Testamento/ }).click();
+  await expect(page.locator('#row-count')).not.toHaveText('Mostrando 159 de 159 textos');
+  expect(indexRequests).toHaveLength(0);
+});
+
 test('the Shroud section is one continuous body on mobile and desktop', async ({ page }) => {
   await page.goto('/biblia/');
   await openLibraryView(page, 'shroud');
