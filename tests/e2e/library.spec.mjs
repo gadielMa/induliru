@@ -1,5 +1,18 @@
 import { test, expect } from '@playwright/test';
 
+async function openLibraryView(page, view) {
+  const toggle = page.locator('#view-menu-toggle');
+  if (await toggle.getAttribute('aria-expanded') !== 'true') {
+    await toggle.evaluate(button => button.click());
+  }
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  const tab = page.locator(`.view-tab[data-view="${view}"]`);
+  await tab.scrollIntoViewIfNeeded();
+  await expect(tab).toBeVisible();
+  await tab.click();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+}
+
 test('the section menu responds to scrolling at mobile and desktop widths', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/biblia/');
@@ -29,6 +42,7 @@ test('section menu is alphabetized and every tile has the same height', async ({
     await page.setViewportSize(viewport);
     await page.goto('/biblia/');
     await page.locator('#view-menu-toggle').click();
+    await expect(page.locator('#view-menu-toggle')).toHaveAttribute('aria-expanded', 'true');
     const tiles = page.locator('#view-links .view-tab');
     const layout = await tiles.evaluateAll(elements => ({
       labels: elements.map(element => element.textContent.trim()),
@@ -167,8 +181,7 @@ test('Noah, Shroud, and Israel vs Judah each render as one body without nested c
     ['shroud', 'Sábana Santa', 'La Sábana Santa de Turín'],
     ['kingdoms', 'Israel vs Judá', 'Israel vs Judá: el reino dividido']
   ]) {
-    await page.locator('#view-menu-toggle').click();
-    await page.locator(`.view-tab[data-view="${view}"]`).click();
+    await openLibraryView(page, view);
     const section = page.locator(`#${view}-view`);
     await expect(section.locator(':scope > .library-single-body')).toHaveCount(1);
     await expect(section.getByRole('heading', { name: heading })).toBeVisible();
@@ -195,9 +208,7 @@ test('all library images preserve their full source framing on mobile and deskto
 test('portrait timeline cards reserve their full width and never overlap adjacent events', async ({ page }) => {
   for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
     await page.setViewportSize(viewport);
-    await page.goto('/biblia/');
-    await page.locator('#view-menu-toggle').click();
-    await page.locator('.view-tab[data-view="timeline"]').click();
+    await page.goto('/biblia/#linea-de-tiempo');
     await page.locator('#timeline-view .timeline-image').evaluateAll(images => {
       images.forEach(image => { image.loading = 'eager'; });
     });
@@ -219,8 +230,7 @@ test('portrait timeline cards reserve their full width and never overlap adjacen
 test('mobile portrait art uses its natural height and the Tartarus citation is styled', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/biblia/');
-  await page.locator('#view-menu-toggle').click();
-  await page.locator('.view-tab[data-view="ascended"]').click();
+  await openLibraryView(page, 'ascended');
   const Moses = page.locator('#ascended-view .extinct-card').filter({ has: page.getByRole('heading', { name: 'Moisés' }) }).locator('.extinct-card-image');
   await Moses.scrollIntoViewIfNeeded();
   await expect.poll(() => Moses.evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
@@ -228,8 +238,7 @@ test('mobile portrait art uses its natural height and the Tartarus citation is s
   expect(MosesDimensions.width).toBeGreaterThan(300);
   expect(MosesDimensions.height / MosesDimensions.width).toBeCloseTo(1 / MosesDimensions.naturalRatio, 1);
 
-  await page.locator('#view-menu-toggle').click();
-  await page.locator('.view-tab[data-view="prophecies"]').click();
+  await openLibraryView(page, 'prophecies');
   const prophecy = page.locator('#prophecies-view .prophecy-card').filter({ has: page.getByRole('heading', { name: 'Mirarán al que traspasaron' }) });
   const prophecyImage = prophecy.locator('.prophecy-card-image');
   await prophecyImage.scrollIntoViewIfNeeded();
@@ -240,14 +249,12 @@ test('mobile portrait art uses its natural height and the Tartarus citation is s
   const pairedImages = page.locator('#prophecies-view .prophecy-image-pair .prophecy-card-image');
   expect(await pairedImages.first().evaluate(image => getComputedStyle(image.parentElement).gridTemplateColumns.split(' ').length)).toBe(1);
 
-  await page.locator('#view-menu-toggle').click();
-  await page.locator('.view-tab[data-view="afterlife"]').click();
+  await openLibraryView(page, 'afterlife');
   const quotation = page.locator('#afterlife-view .extinct-card-body > blockquote').first();
   await expect(quotation).toBeVisible();
   expect(await quotation.evaluate(element => getComputedStyle(element).borderLeftWidth)).toBe('3px');
 
-  await page.locator('#view-menu-toggle').click();
-  await page.locator('.view-tab[data-view="animals"]').click();
+  await openLibraryView(page, 'animals');
   const lion = page.locator('#extinct-view .extinct-card').filter({ has: page.getByRole('heading', { name: 'León asiático' }) }).locator('.extinct-card-image');
   await lion.scrollIntoViewIfNeeded();
   const lionRatio = await lion.evaluate(image => image.getBoundingClientRect().width / image.getBoundingClientRect().height);
@@ -534,8 +541,7 @@ test('extinct animals and lost places are separate views and their images load',
 test('devil and related-figure cards are alphabetized and new ancient deities have illustrations', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/biblia/');
-  await page.locator('#view-menu-toggle').click();
-  await page.locator('.view-tab[data-view="devils"]').click();
+  await openLibraryView(page, 'devils');
   const grid = page.locator('#devils-view .extinct-grid');
   await expect(grid).toContainText('Asera / Asherah');
   await expect(grid).toContainText('Astarot / Astarté');
