@@ -553,6 +553,12 @@ test('devil and related-figure cards are alphabetized and new ancient deities ha
   await expect(grid).toContainText('Moloc / Molok');
   await expect(grid).toContainText('Dagón');
   await expect(grid).toContainText('Tamuz / Tammuz');
+  const apocalypticBeast = grid.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'El Anticristo y la Bestia', exact: true }) });
+  const apocalypticBeastImage = apocalypticBeast.locator('img');
+  await expect(apocalypticBeastImage).toHaveAttribute('src', 'assets/diablos/bestia-hierro-60060600.png');
+  await expect(apocalypticBeastImage).toHaveAttribute('alt', /hierro.*garras de bronce.*60060600/);
+  await apocalypticBeastImage.scrollIntoViewIfNeeded();
+  await expect.poll(() => apocalypticBeastImage.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
   await expect(page.locator('#devils-view .extinct-intro')).toContainText('no significa que sus propias tradiciones las consideraran demonios');
   const Shemihaza = grid.locator('.extinct-card').filter({ has: page.getByRole('heading', { name: 'Shemihaza y los Vigilantes', exact: true }) });
   await expect(Shemihaza.locator('img')).toHaveAttribute('src', 'assets/enoc/vigilantes.jpg');
