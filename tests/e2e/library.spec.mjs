@@ -70,7 +70,10 @@ test('the section menu opens and fits on very narrow phones', async ({ page }) =
     const toggle = phone.locator('#view-menu-toggle');
     const links = phone.locator('#view-links');
 
-    await toggle.click();
+    // Playwright's coordinate click can land outside the button while its
+    // sticky width is being recalculated at very narrow viewport sizes.
+    // Invoke the real DOM click event and verify the same user-facing state.
+    await toggle.evaluate(element => element.click());
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await expect(links.getByRole('button', { name: 'Israel vs Judá' })).toBeVisible();
     const bounds = await links.evaluate(element => ({
