@@ -64,11 +64,11 @@ test('prayers show the Matthew text and the biblical portion of the Ave Maria', 
 
 test('the section menu opens and fits on very narrow phones', async ({ page }) => {
   for (const width of [320, 280]) {
-    await page.setViewportSize({ width, height: 720 });
-    await page.goto('/biblia/');
-    const navigation = page.locator('#view-navigation');
-    const toggle = page.locator('#view-menu-toggle');
-    const links = page.locator('#view-links');
+    const context = await page.context().browser().newContext({ viewport: { width, height: 720 } });
+    const phone = await context.newPage();
+    await phone.goto('/biblia/');
+    const toggle = phone.locator('#view-menu-toggle');
+    const links = phone.locator('#view-links');
 
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
@@ -81,6 +81,7 @@ test('the section menu opens and fits on very narrow phones', async ({ page }) =
     expect(bounds.width).toBeLessThanOrEqual(width);
     expect(bounds.left).toBeGreaterThanOrEqual(0);
     expect(bounds.right).toBeLessThanOrEqual(width);
+    await context.close();
   }
 });
 
@@ -101,6 +102,15 @@ test('birth section distinguishes the proposed crucifixion dates from establishe
   await expect(birth).toContainText('viernes 3 de abril del 33 d. C.');
   await expect(birth).toContainText('ningún Evangelio afirma que muriera exactamente a los 33');
   await expect(birth).toContainText('el «día de preparación» es el viernes');
+});
+
+test('Merneptah stele is shown as evidence of Israel in Canaan during his reign, not in Egypt', async ({ page }) => {
+  await page.goto('/biblia/#linea-de-tiempo');
+  await openLibraryView(page, 'timeline');
+  const event = page.locator('#timeline-view .timeline-event').filter({ has: page.getByRole('heading', { name: 'Israel aparece en la estela de Merneptah' }) });
+  await expect(event).toContainText('c. 1208 a. C. · año 5 de Merneptah');
+  await expect(event).toContainText('No documenta una visita de Israel a Egipto');
+  await expect(event.getByRole('link', { name: 'Estela de Merneptah · texto y contexto' })).toHaveAttribute('href', 'https://www.posenlibrary.com/entry/stela-merneptah');
 });
 
 test('the timeline adds the divine-council arc without claiming the texts name the seventy elohim', async ({ page }) => {
