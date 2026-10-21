@@ -62,6 +62,28 @@ test('prayers show the Matthew text and the biblical portion of the Ave Maria', 
   await expect(prayers).toContainText('Se omite la súplica posterior');
 });
 
+test('the section menu opens and fits on very narrow phones', async ({ page }) => {
+  for (const width of [320, 280]) {
+    await page.setViewportSize({ width, height: 720 });
+    await page.goto('/biblia/');
+    const navigation = page.locator('#view-navigation');
+    const toggle = page.locator('#view-menu-toggle');
+    const links = page.locator('#view-links');
+
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(links.getByRole('button', { name: 'Israel vs Judá' })).toBeVisible();
+    const bounds = await links.evaluate(element => ({
+      left: element.getBoundingClientRect().left,
+      right: element.getBoundingClientRect().right,
+      width: element.getBoundingClientRect().width
+    }));
+    expect(bounds.width).toBeLessThanOrEqual(width);
+    expect(bounds.left).toBeGreaterThanOrEqual(0);
+    expect(bounds.right).toBeLessThanOrEqual(width);
+  }
+});
+
 test('direct index.html links are cleaned to the short Bible URL without losing the fragment', async ({ page }) => {
   await page.goto('/biblia/index.html#linea-de-tiempo');
   await expect(page).toHaveURL(/\/biblia\/#linea-de-tiempo$/);
