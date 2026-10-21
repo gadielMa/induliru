@@ -92,6 +92,17 @@ test('direct index.html links are cleaned to the short Bible URL without losing 
   await expect(page.getByRole('link', { name: '← Volver a la biblioteca' })).toHaveAttribute('href', '../');
 });
 
+test('birth section distinguishes the proposed crucifixion dates from established facts', async ({ page }) => {
+  await page.goto('/biblia/');
+  await openLibraryView(page, 'birth');
+  const birth = page.locator('#birth-view');
+  await expect(birth).toContainText('Muerte de Jesús: ¿30 o 33 d. C.?');
+  await expect(birth).toContainText('viernes 7 de abril del año 30');
+  await expect(birth).toContainText('viernes 3 de abril del 33 d. C.');
+  await expect(birth).toContainText('ningún Evangelio afirma que muriera exactamente a los 33');
+  await expect(birth).toContainText('el «día de preparación» es el viernes');
+});
+
 test('the timeline adds the divine-council arc without claiming the texts name the seventy elohim', async ({ page }) => {
   await page.goto('/biblia/#linea-de-tiempo');
   await openLibraryView(page, 'timeline');
