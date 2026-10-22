@@ -5,8 +5,9 @@ test('the home page is a lightweight directory of independent sections', async (
   expect((await response.body()).byteLength).toBeLessThan(6000);
   await expect(page.getByRole('heading', { name: 'La historia completa' })).toBeVisible();
   const links = page.locator('.home-sections a');
-  await expect(links).toHaveCount(27);
+  await expect(links).toHaveCount(28);
   await expect(links.filter({ hasText: 'Línea de tiempo' })).toHaveAttribute('href', 'seccion.html?tema=linea-de-tiempo');
+  await expect(links.filter({ hasText: 'Dragones' })).toHaveAttribute('href', 'seccion.html?tema=dragones');
   await expect(page.locator('script[src]')).toHaveCount(0);
   await expect(page.locator('img')).toHaveCount(0);
 });
@@ -21,7 +22,23 @@ test('a standalone section fetches only its own content', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Pedro traidor', level: 1 })).toBeVisible();
   await expect(page.locator('#pedro-traidor-view')).toContainText('¿A quién llama Jesús «Satanás»?');
   expect(sectionRequests).toEqual([expect.stringMatching(/\/secciones\/pedro-traidor\.html$/)]);
-  await expect(page.locator('.section-picker-links a')).toHaveCount(27);
+  await expect(page.locator('.section-picker-links a')).toHaveCount(28);
+});
+
+test('Dragones loads the complete Bel and the Dragon text and timeline card', async ({ page }) => {
+  const requests = [];
+  page.on('request', request => requests.push(new URL(request.url()).pathname));
+  await page.goto('/biblia/seccion.html?tema=dragones');
+  const section = page.locator('#dragones-view');
+  await expect(section.getByRole('heading', { name: 'Bel y el Dragón' }).first()).toBeVisible();
+  await expect(section.locator('#dragon-source-text')).toContainText('42. Y sacólo');
+  expect(requests.some(path => path.endsWith('/Bel-y-el-Dragon.txt'))).toBe(true);
+  expect(requests.some(path => path.endsWith('/timeline-page.mjs'))).toBe(false);
+
+  await page.goto('/biblia/seccion.html?tema=linea-de-tiempo');
+  const event = page.locator('.timeline-event').filter({ has: page.getByRole('heading', { name: 'Daniel y el dragón en el relato griego' }) });
+  await expect(event).toBeVisible();
+  await expect(event.locator('img')).toHaveAttribute('src', /daniel-mata-dragon\.jpg$/);
 });
 
 test('the timeline initializes from its own module and does not load other sections', async ({ page }) => {
