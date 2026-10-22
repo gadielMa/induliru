@@ -112,7 +112,11 @@ test('Merneptah stele is shown as evidence of Israel in Canaan during his reign,
   await openLibraryView(page, 'timeline');
   const event = page.locator('#timeline-view .timeline-event').filter({ has: page.getByRole('heading', { name: 'Israel aparece en la estela de Merneptah' }) });
   await expect(event).toContainText('c. 1208 a. C. · año 5 de Merneptah');
-  await expect(event).toContainText('No documenta una visita de Israel a Egipto');
+  await expect(event).toContainText('descubierta en Tebas, Egipto');
+  await expect(event).toContainText('no documenta que Israel visitara Egipto');
+  const timelineTitles = await page.locator('#timeline-view .timeline-event h3').allTextContents();
+  expect(timelineTitles[timelineTitles.indexOf('Israel aparece en la estela de Merneptah') - 1])
+    .toBe('José es vendido y asciende en Egipto');
   await expect(event.getByRole('link', { name: 'Estela de Merneptah · texto y contexto' })).toHaveAttribute('href', 'https://www.posenlibrary.com/entry/stela-merneptah');
 });
 
