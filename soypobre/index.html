@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <meta name="description" content="Soy Pobre: una forma simple de contar tu historia y compartir dónde recibir ayuda." />
+    <title>Soy Pobre</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <main>
+      <section class="hero" id="home" aria-labelledby="title">
+        <h1 id="title" class="visually-hidden">Soy Pobre</h1>
+        <button class="giant-button" id="startButton" type="button">
+          <span>Soy Pobre</span>
+          <small>Clickea acá</small>
+        </button>
+      </section>
+
+      <section class="form-section" id="formSection" aria-labelledby="formTitle" hidden>
+        <div class="form-wrap">
+          <button class="back-link" id="backButton" type="button">← Volver</button>
+          <p class="eyebrow">paso 01 / 01</p>
+          <h2 id="formTitle">Contanos un poco<br /><em>de vos.</em></h2>
+          <p class="form-lead">Dejanos un medio para recibir ayuda y, si querés, tu historia.</p>
+
+          <form id="helpForm" novalidate>
+            <div class="field-group">
+              <label for="cbu">CBU <span>(opcional)</span></label>
+              <input id="cbu" name="cbu" inputmode="numeric" maxlength="22" placeholder="22 dígitos" autocomplete="off" />
+            </div>
+            <div class="or-divider"><span>o</span></div>
+            <div class="field-group">
+              <label for="alias">Alias <span>(opcional)</span></label>
+              <input id="alias" name="alias" maxlength="50" placeholder="tu.alias" autocomplete="off" />
+            </div>
+            <p class="field-hint">Completá al menos uno de los dos.</p>
+
+            <div class="field-group story-group">
+              <label for="story">Tu historia <span>(opcional)</span></label>
+              <textarea id="story" name="story" rows="5" maxlength="1000" placeholder="Escribí brevemente qué estás atravesando..."></textarea>
+              <div class="counter"><span id="storyCount">0</span> / 1000</div>
+            </div>
+
+            <div class="field-group">
+              <label for="photo">Una foto <span>(opcional)</span></label>
+              <label class="file-picker" for="photo"><span id="fileLabel">Elegir una foto</span><strong>+</strong></label>
+              <input class="visually-hidden" id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" />
+              <p class="field-hint">JPG, PNG o WebP · máximo 5 MB</p>
+            </div>
+
+            <label class="consent"><input id="consent" type="checkbox" required /><span>Entiendo que estos datos serán usados para contactarme y pedir ayuda.</span></label>
+            <button class="submit-button" type="submit" id="submitButton">Guardar mi historia <span aria-hidden="true">↗</span></button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+
+    </main>
+    <script src="app.js?v=2"></script>
+  </body>
+</html>
