@@ -1,15 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test('the home page is a lightweight directory of independent sections', async ({ page }) => {
+test('the site opens the catalog by default instead of showing the section directory', async ({ page }) => {
   const response = await page.goto('/biblia/');
   expect((await response.body()).byteLength).toBeLessThan(6000);
-  await expect(page.getByRole('heading', { name: 'La historia completa' })).toBeVisible();
-  const links = page.locator('.home-sections a');
-  await expect(links).toHaveCount(28);
-  await expect(links.filter({ hasText: 'Línea de tiempo' })).toHaveAttribute('href', 'seccion.html?tema=linea-de-tiempo');
-  await expect(links.filter({ hasText: 'Dragones' })).toHaveAttribute('href', 'seccion.html?tema=dragones');
-  await expect(page.locator('script[src]')).toHaveCount(0);
-  await expect(page.locator('img')).toHaveCount(0);
+  await expect(page).toHaveURL(/\/biblia\/seccion\.html\?tema=catalogo$/);
+  await expect(page.getByRole('heading', { name: 'Catálogo', level: 1 })).toBeVisible();
+  await expect(page.locator('.home-sections')).toHaveCount(0);
 });
 
 test('a standalone section fetches only its own content', async ({ page }) => {
