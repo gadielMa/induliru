@@ -17,7 +17,25 @@ test('a standalone section fetches only its own content', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Pedro traidor', level: 1 })).toBeVisible();
   await expect(page.locator('#pedro-traidor-view')).toContainText('¿A quién llama Jesús «Satanás»?');
   expect(sectionRequests).toEqual([expect.stringMatching(/\/secciones\/pedro-traidor\.html$/)]);
-  await expect(page.locator('.section-picker-links a')).toHaveCount(32);
+  await expect(page.locator('.section-picker-links a')).toHaveCount(34);
+});
+
+test('Gigantes Nefilim includes the supplied figures, images, and quoted passages', async ({ page }) => {
+  await page.goto('/biblia/seccion.html?tema=gigantes-nefilim');
+  const section = page.locator('#gigantes-nefilim-view');
+  await expect(section.locator('.nephilim-card img')).toHaveCount(8);
+  await expect(section).toContainText('Goliat: 3 metros de alto, con una armadura de bronce de 55 kg.');
+  await expect(section).toContainText('El gigante de 6 dedos');
+  await expect(section).toContainText('Enoc 15:8-11');
+});
+
+test('Piedras de Ica shows all supplied images, requested wording, and archaeological context', async ({ page }) => {
+  await page.goto('/biblia/seccion.html?tema=piedras-de-ica');
+  const section = page.locator('#piedras-de-ica-view');
+  await expect(section.locator('.ica-gallery img')).toHaveCount(5);
+  await expect(section.locator('.ica-claim')).toContainText('Entonces nos mintieron y los hombres convivimos con los dinosaurios?');
+  await expect(section.getByRole('heading', { name: 'Ezequiel 32:2' })).toBeVisible();
+  await expect(section).toContainText('no demuestran por sí solas que sean antiguas');
 });
 
 test('Dragones loads the complete Bel and the Dragon text and timeline card', async ({ page }) => {
